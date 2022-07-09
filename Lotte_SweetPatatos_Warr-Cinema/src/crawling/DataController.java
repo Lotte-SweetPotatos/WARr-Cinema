@@ -9,19 +9,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.MovieDetailDao;
+import dao.MovieDao;
 import dto.MovieDto;
 
-@WebServlet("/")
+@WebServlet("")
 public class DataController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		MovieDetailDao dao = MovieDetailDao.getInstance();
+		
+		MovieDao dao = MovieDao.getInstance();
+		
 		Crawling craw = Crawling.getInstance();
-		List<MovieDto> movies = craw.test();
+		
+		List<MovieDto> movies = craw.findMovieInfo();
+		
 		if (dao.findAll().size() == 0) {
-			dao.insertData(movies);
+			dao.insert(movies);
 		}
+		
+		resp.sendRedirect("movie/main.jsp");
 	}
 }
