@@ -1,8 +1,10 @@
 package member;
 
 import dao.MemberDao;
+import dto.MemberDto;
 import net.sf.json.JSONObject;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +36,22 @@ public class MemberController extends HttpServlet {
 
             resp.setContentType("application/x-json; charset=utf-8");
             resp.getWriter().println(jsonObject);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Optional<String> queryParam = Optional.ofNullable(req.getParameter("param"));
+        if (queryParam.isEmpty()) {
+            resp.sendRedirect("main.jsp");
+            return;
+        }
+        if ("signup".equals(queryParam.get())) {
+            String userId = req.getParameter("userId");
+            String password = req.getParameter("password");
+            String username = req.getParameter("userName");
+            String email = req.getParameter("email");
+            memberDao.save(new MemberDto(userId, password, username, email));
         }
     }
 }

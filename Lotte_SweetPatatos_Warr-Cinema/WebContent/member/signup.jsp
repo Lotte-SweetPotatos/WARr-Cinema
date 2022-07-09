@@ -40,7 +40,7 @@
                     이름
                 </th>
                 <td>
-                    <input type="text" name="name" size="20">
+                    <input type="text" name="userName" size="20">
                 </td>
             </tr>
             <tr>

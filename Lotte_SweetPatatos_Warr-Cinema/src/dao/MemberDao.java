@@ -1,6 +1,7 @@
 package dao;
 
 import db.DBConnection;
+import dto.MemberDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,5 +40,22 @@ public class MemberDao {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void save(MemberDto memberDto) {
+        String sql = "insert into member(userId, userName, password, email) values(?, ?, ?, ?)";
+        try (
+                Connection conn = DBConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+        ) {
+
+            pstmt.setString(1, memberDto.getUserId());
+            pstmt.setString(2, memberDto.getUserName());
+            pstmt.setString(3, memberDto.getPassword());
+            pstmt.setString(4, memberDto.getEmail());
+            int i = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
