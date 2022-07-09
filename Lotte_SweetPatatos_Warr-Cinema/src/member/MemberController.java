@@ -31,10 +31,10 @@ public class MemberController extends HttpServlet {
             final String userId = req.getParameter("userId");
             final boolean userExists = memberDao.findBy(userId);
 
+            resp.setContentType("application/x-json; charset=utf-8");
             final JSONObject jsonObject = new JSONObject();
             jsonObject.put("userExists", userExists);
-
-            resp.setContentType("application/x-json; charset=utf-8");
+            resp.getWriter().println(jsonObject);
             return;
         }
 
