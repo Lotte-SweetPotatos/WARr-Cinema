@@ -21,7 +21,7 @@ public class DBConnection {
 	
 	public static Connection getConnection() {
 		
-		String url = "jdbc:mysql://localhost:3306/mydb";
+		String url = "jdbc:mysql://localhost:3306/moviedb";
 		String user = "root";
 		String password = "1234";
 		Connection conn = null;
