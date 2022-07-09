@@ -15,11 +15,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-MovieDetailDao dao = MovieDetailDao.getInstance();
-Crawling craw = Crawling.getInstance();
-List<MovieDto> movies = craw.test();
-if (dao.findAll().size() == 0) {
-	dao.insertData(movies);
-}
+
 response.sendRedirect("movie/main.jsp");
 %>
