@@ -18,7 +18,9 @@ public class Crawling {
 	
 	private static Crawling craw = new Crawling();
 	
-	private Crawling() {}
+	private Crawling() {
+		DBConnection.initConnection();
+	}
 	
 	public static Crawling getInstance() {
 		return craw;

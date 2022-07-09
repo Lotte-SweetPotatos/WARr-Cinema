@@ -31,6 +31,7 @@ public class MovieDto {
 
 	public MovieDto(long id, String title, String content, double grade, String genre, String director, int runningTime,
 			String openingDate, String poster, double percent) {
+
 		this.id = id;
 		this.title = title;
 		this.content = content;
