@@ -40,6 +40,11 @@ public class MemberController extends HttpServlet {
 
         if ("login".equals(param)) {
             resp.sendRedirect("member/login.jsp");
+            return;
+        }
+
+        if ("signup".equals(param)) {
+            resp.sendRedirect("member/signup.jsp");
         }
     }
 
