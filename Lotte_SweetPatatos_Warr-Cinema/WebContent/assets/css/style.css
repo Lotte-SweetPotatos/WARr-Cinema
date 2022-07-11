@@ -171,6 +171,10 @@ main {
     padding-top: 2rem;
 }
 
+figure img {
+    max-width: 400px;
+}
+
 /**
  * TITLES & SUBTITLES
  */
@@ -552,7 +556,6 @@ main {
 \*-----------------------------------*/
 
 .item {
-    min-height: 750px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -624,9 +627,6 @@ main {
 \*-----------------------------------*/
 
 .service {
-    background: url("../images/service-bg.jpg") no-repeat;
-    background-size: cover;
-    background-position: center;
     padding-block: var(--section-padding);
 }
 
@@ -701,10 +701,10 @@ main {
     margin-bottom: 40px;
 }
 
-.service-list > li:first-child {
-    padding-bottom: 20px;
+.service-list > li {
+    padding-bottom: 0.5rem;
     border-bottom: 1px dashed hsla(0, 0%, 100%, 0.1);
-    margin-bottom: 30px;
+    margin-bottom: 1rem;
 }
 
 .service-card .card-icon {
@@ -1007,12 +1007,11 @@ main {
 }
 
 .movie-detail-banner {
+    min-width: 400px;
     position: relative;
     background: var(--gunmetal-1);
-    max-width: 300px;
     margin-inline: auto;
     border-radius: 6px;
-    overflow: hidden;
     margin-bottom: 50px;
 }
 
@@ -1113,7 +1112,7 @@ main {
     background: var(--citrine);
 }
 
-.download-btn {
+.ticket-btn {
     max-width: max-content;
     background: var(--citrine);
     color: var(--rich-black-fogra-29);
@@ -1128,7 +1127,7 @@ main {
     border-radius: 6px;
 }
 
-.download-btn ion-icon {
+.ticket-btn ion-icon {
     font-size: 16px;
 }
 
@@ -1164,7 +1163,6 @@ main {
         max-width: 540px;
         margin-inline: auto;
     }
-
 
     .main-container {
         margin-inline: auto;
@@ -1577,12 +1575,6 @@ main {
         margin: 0;
     }
 
-    .download-btn {
-        position: absolute;
-        left: 15px;
-        bottom: -80px;
-    }
-
 }
 
 
@@ -1690,19 +1682,4 @@ main {
     .detail-title {
         --fs-1: 60px;
     }
-
-    .download-btn {
-        left: auto;
-        right: 15px;
-        bottom: 0;
-        transform: rotate(0.25turn) translateY(100%);
-        transform-origin: bottom right;
-        padding: 40px 50px;
-    }
-
-    .download-btn ion-icon {
-        font-size: 30px;
-        transform: rotate(-0.25turn);
-    }
-
 }
