@@ -53,7 +53,7 @@
         <div class="navbar-nav d-flex flex-row w-100">
             <a class="nav-link" href="/movie/main.jsp">Home </a>
             <a class="nav-link" href="/movie/ticket.jsp">Reservation </a>
-            <a class="ml-auto nav-link" href="#">Login</a>
+            <a class="ml-auto nav-link" href="/member/login.jsp">Login</a>
         </div>
     </div>
 </nav>
@@ -67,7 +67,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" id="userId">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-primary" id="idBtn">중복 확인</button>
+                        <button class="btn btn-outline-danger" id="idBtn">중복 확인</button>
                     </div>
                 </div>
             </div>
