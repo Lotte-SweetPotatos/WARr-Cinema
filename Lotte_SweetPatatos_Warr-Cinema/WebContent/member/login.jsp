@@ -7,43 +7,83 @@
     <title>Insert title here</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="http://lab.alexcican.com/set_cookies/cookie.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+            integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+            crossorigin="anonymous"></script>
 </head>
 </head>
 <style>
-    .center {
-        margin: auto;
-        width: 60%;
-        border: 3px solid black;
-        padding: 10px;
+    a {
+        text-decoration: none;
+    }
+
+    .navbar {
+        margin-bottom: 1rem;
+    }
+
+    .navbar-brand {
+        color: #111111;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 1rem;
+    }
+
+    .nav-link {
+        color: #111111;
+    }
+
+    a:hover {
+        color: #727272;
+    }
+
+    .form-flex div{
+        margin: 0.5rem;
     }
 </style>
 <body>
-<h2>로그인</h2>
-<div class="center">
-    <form action="<%=request.getContextPath()%>/member" method="post" id="loginForm">
-        <input type="hidden" name="param" value="login">
-        <table border="1">
-            <tr>
-                <th>아이디</th>
-                <td>
-                    <input type="text" id="userId" name="userId" size="20"><br>
-                    <input type="checkbox" id="chk_save_id">save id
-                </td>
-            </tr>
-            <tr>
-                <th>비밀번호</th>
-                <td>
-                    <input type="password" id="password" name="password" size="20"><br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" value="로그인">
-                    <a href="<%=request.getContextPath()%>/member?param=signup">회원가입</a>
-                </td>
-            </tr>
-        </table>
-    </form>
+<nav class="navbar navbar-expand border-bottom">
+    <div class="container">
+        <div class="navbar-nav">
+            <span class="navbar-brand">와르르 시네마</span>
+        </div>
+        <div class="navbar-nav d-flex flex-row w-100">
+            <a class="nav-link" href="/movie/main.jsp">Home </a>
+            <a class="nav-link" href="/movie/ticket.jsp">Reservation </a>
+            <a class="ml-auto nav-link" href="#">Login</a>
+        </div>
+    </div>
+</nav>
+<div class="container main d-flex justify-content-center">
+    <div class="card w-50 p-4 mt-4">
+        <form class="form-flex d-flex flex-column" action="<%=request.getContextPath()%>/member" method="post" id="loginForm">
+            <input type="hidden" name="param" value="login">
+            <div class="form-group">
+                <label for="userId">ID</label>
+                <input type="text" class="form-control" id="userId">
+                <input type="checkbox" id="chk_save_id">
+                <label for="chk_save_id">save id</label>
+            </div>
+            <div class="form-group">
+                <label for="userId">PASSWORD</label>
+                <input type="text" class="form-control" id="password">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn-danger form-control mt-3 mb-3ƒ">LOGIN</button>
+            </div>
+            <div class="d-flex flex-column justify-content-center align-items-center mt-3">
+                <p>아직 회원이 아니세요?</p>
+                <a href="<%=request.getContextPath()%>/member?param=signup">회원가입</a>
+            </div>
+        </form>
+    </div>
 </div>
 <script>
     const user_id = $.cookie('user_id');
