@@ -32,7 +32,7 @@
                     비밀번호
                 </th>
                 <td>
-                    <input type="text" name="password" size="20">
+                    <input type="password" name="password" size="20">
                 </td>
             </tr>
             <tr>

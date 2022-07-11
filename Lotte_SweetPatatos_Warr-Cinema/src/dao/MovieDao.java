@@ -1,8 +1,5 @@
 package dao;
 
-import db.DBConnection;
-import dto.MovieDto;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,50 +7,142 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * title varchar(100) not null,
- * content varchar(4000) not null,
- * grade decimal(8,2) not null,
- * genre varchar(100) not null,
- * director varchar(100) not null,
- * runningTime int not null,
- * openingDate varchar(100) not null,
- * poster varchar(1000) not null,
- * percent decimal(8,2) not null
- */
+import db.DBClose;
+import db.DBConnection;
+import dto.MovieDto;
+
 public class MovieDao {
 
     private static final MovieDao movieDao = new MovieDao();
 
-    public MovieDao() {
-        DBConnection.initConnection();
-    }
+	private MovieDao() {
+		DBConnection.initConnection();
+	}
 
-    public static MovieDao getInstance() {
-        return movieDao;
-    }
+	public static MovieDao getInstance() {
+		return movieDao;
+	}
 
+	/*
+	 * @param id : 영화 id
+	 */
+	public MovieDto find(long id) {
+		String sql = " select * " + " from movie " + " where id = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		MovieDto movie = null;
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setLong(1, id);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				int i = 1;
+				movie = new MovieDto(rs.getLong(i++),
+									 rs.getString(i++), 
+									 rs.getString(i++), 
+									 rs.getDouble(i++), 
+									 rs.getString(i++), 
+									 rs.getString(i++), 
+									 rs.getInt(i++), 
+									 rs.getString(i++), 
+									 rs.getString(i++), 
+									 rs.getDouble(i++));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, rs);
+		}
+		
+		return movie;
+	}
 
-    public List<MovieDto> findAllMovie() {
-        String sql = "select title, grade, poster from movie";
+	public List<MovieDto> findAllMainMovies() {
+		String sql = "select title, grade, poster from movie";
 
-        List<MovieDto> movieDtoList = new ArrayList<>();
-        try (
-                Connection conn = DBConnection.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql)
-        ) {
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                String title = rs.getString(1);
-                double grade = rs.getDouble(2);
-                String post = rs.getString(3);
-                movieDtoList.add(new MovieDto(title, grade, post));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return movieDtoList;
-    }
+		List<MovieDto> movieDtos = new ArrayList<>();
+		try (
+				Connection conn = DBConnection.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)
+		) {
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String title = rs.getString(1);
+				double grade = rs.getDouble(2);
+				String post = rs.getString(3);
+				movieDtos.add(new MovieDto(title, grade, post));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return movieDtos;
+	}
+	
+	public List<MovieDto> findAll() {
+		String sql = " select * " + " from movie ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<MovieDto> movieDtos = new ArrayList<>();
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				MovieDto dto =new MovieDto();
+				movieDtos.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, rs);
+		}
+		
+		return movieDtos;
+	}
+	
+	public boolean create(List<MovieDto> dto) {
+		String sql = "insert into movie(title, content, grade, genre, director, runningTime, openingDate, poster, percent) "
+				+ "values(?,?,?,?,?,?,?,?,?) ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+
+		try {
+			conn = DBConnection.getConnection();
+			for (MovieDto m : dto) {
+				psmt = conn.prepareStatement(sql);
+
+				psmt.setString(1, m.getTitle());
+				psmt.setString(2, m.getContent());
+				psmt.setDouble(3, m.getGrade());
+				psmt.setString(4, m.getGenre());
+				psmt.setString(5, m.getDirector());
+				psmt.setInt(6, m.getRunningTime());
+				psmt.setString(7, m.getOpeningDate());
+				psmt.setString(8, m.getPoster());
+				psmt.setDouble(9, m.getPercent());
+				
+				count = psmt.executeUpdate();
+				
+				if(count != 1) {
+					return false;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, null);
+		}
+		
+		return true;
+	}
 }
-
-

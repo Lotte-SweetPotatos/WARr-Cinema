@@ -16,6 +16,7 @@ public class MemberDto {
     }
 
     public MemberDto(Long id, String userId, String userName, String password, String email) {
+        this.id = id;
         this.userId = userId;
         this.userName = userName;
         this.password = password;
