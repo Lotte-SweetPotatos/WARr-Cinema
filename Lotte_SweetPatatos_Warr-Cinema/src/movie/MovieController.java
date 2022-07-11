@@ -20,8 +20,7 @@ public class MovieController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		final Optional<String> queryParam = Optional.ofNullable(req.getParameter("param"));
-		
-		if (queryParam.isEmpty()) {
+    if (isPresentParameter(queryParam)) {
 			resp.sendRedirect("movie/main.jsp");
 			return;
 		}
@@ -42,15 +41,20 @@ public class MovieController extends HttpServlet {
 			}
 			
 			resp.sendRedirect(req.getContextPath()+"/movie/detail.jsp?id=" + movieId.get().longValue());
-			
 			return;
 		}
-		// 아래 메인과 예약 등등 기능을 작성해주시면 됩니다.
+
+		if ("main".equals(param)) {
+			resp.sendRedirect("movie/main.jsp");
+			return;
+		}
+		if ("ticket".equals(param)) {
+			resp.sendRedirect("movie/ticket.jsp");
+		}
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
 	}
 	
 	private boolean loginValidation(HttpServletRequest req) {
@@ -61,5 +65,9 @@ public class MovieController extends HttpServlet {
 		}
 		
 		return true;
+	}
+
+	private boolean isPresentParameter(Optional<String> queryParam) {
+		return queryParam.isEmpty() || "".equals(queryParam.get());
 	}
 }
