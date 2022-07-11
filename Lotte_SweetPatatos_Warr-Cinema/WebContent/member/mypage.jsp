@@ -223,7 +223,7 @@ table.info {
 				<div class="sector-two">
 					<strong style="font-size: 25pt;"><%=member.getUserName()%>
 					</strong> <strong>반갑습니다.</strong>
-					<p>tlsdnwn55@naver.com</p>
+					<p><%=member.getEmail() %></p>
 				</div>
 				<div class="sector-three">
 					<p
@@ -284,7 +284,7 @@ table.info {
 			%>
 			<div class="ticket-box">
 				<form action="../member?param=cancel" method="post">
-					<%-- 					<input type="hidden" name="user_id" value=<%=member.getId() %>> --%>
+					<input type="hidden" name="user_id" value=<%=member.getId() %>>
 					<input type="hidden" name="movie_id" value=<%=movie_id%>> <input
 						type="hidden" name="running_id" value=<%=running_id%>>
 					<table class="info">
