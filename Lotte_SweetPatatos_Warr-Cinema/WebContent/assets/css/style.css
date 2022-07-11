@@ -163,6 +163,10 @@ body.active {
     margin: 0.8rem;
 }
 
+.form-flex {
+    width: 60%;
+}
+
 main {
     padding-top: 2rem;
 }
