@@ -120,7 +120,7 @@
                             </div>
                             <div>
                                 <ion-icon name="time-outline"></ion-icon>
-                                <time><%=movie.getRunningTime()%>
+                                <time><%=movie.getRunningTime()%> min
                                 </time>
                             </div>
                         </div>
