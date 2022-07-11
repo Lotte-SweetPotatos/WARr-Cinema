@@ -18,7 +18,7 @@ public class MovieDao {
 	
 	private static MovieDao movieDetailDao = new MovieDao();
 
-	public MovieDao() {
+	private MovieDao() {
 		DBConnection.initConnection();
 	}
 
@@ -40,17 +40,12 @@ public class MovieDao {
 		MovieDto movie = null;
 		
 		try {
-			
 			conn = DBConnection.getConnection();
-			
 			psmt = conn.prepareStatement(sql);
-			
 			psmt.setLong(1, id);
-			
 			rs = psmt.executeQuery();
 			
 			while(rs.next()) {
-				
 				int i = 1;
 				
 				movie = new MovieDto(rs.getLong(i++),
@@ -74,25 +69,17 @@ public class MovieDao {
 	}
 	
 	public List<MovieDto> findAll() {
-		
 		String sql = " select * " + " from movie ";
-		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		
 		List<MovieDto> list = new ArrayList<MovieDto>();
 		
 		try {
-			
 			conn = DBConnection.getConnection();
-			
 			psmt = conn.prepareStatement(sql);
-			
 			rs = psmt.executeQuery();
-			
 			while(rs.next()) {
-				
 				MovieDto dto =new MovieDto();
 				
 				list.add(dto);
@@ -107,23 +94,15 @@ public class MovieDao {
 	}
 	
 	public boolean create(List<MovieDto> dto) {
-		
 		String sql = "insert into movie(title, content, grade, genre, director, runningTime, openingDate, poster, percent) "
 				+ "values(?,?,?,?,?,?,?,?,?) ";
-
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		
 		int count = 0;
-
 		try {
-			
 			conn = DBConnection.getConnection();
-
 			for (MovieDto m : dto) {
-
 				psmt = conn.prepareStatement(sql);
-
 				psmt.setString(1, m.getTitle());
 				psmt.setString(2, m.getContent());
 				psmt.setDouble(3, m.getGrade());
@@ -133,7 +112,6 @@ public class MovieDao {
 				psmt.setString(7, m.getOpeningDate());
 				psmt.setString(8, m.getPoster());
 				psmt.setDouble(9, m.getPercent());
-				
 				count = psmt.executeUpdate();
 				
 				if(count!=1) {
