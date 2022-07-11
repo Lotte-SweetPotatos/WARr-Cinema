@@ -457,8 +457,9 @@ main {
 }
 
 .header.active {
+    opacity: 90%;
     background: var(--eerie-black);
-    padding-block: 20px;
+    padding-block: 25px;
 }
 
 .header .container {
@@ -546,7 +547,6 @@ main {
     pointer-events: all;
 }
 
-
 /*-----------------------------------*\
  * #HERO
 \*-----------------------------------*/
@@ -582,13 +582,6 @@ main {
 /*-----------------------------------*\
  * #UPCOMING
 \*-----------------------------------*/
-
-.upcoming {
-    background: url("../images/upcoming-bg.png") no-repeat;
-    background-size: cover;
-    background-position: center;
-    padding-block: var(--section-padding);
-}
 
 .upcoming .flex-wrapper {
     margin-bottom: 50px;
@@ -800,7 +793,7 @@ main {
 \*-----------------------------------*/
 
 .tv-series {
-    background: url("../images/tv-series-bg.jpg") no-repeat;
+    background: url("../images/background.jpg") no-repeat;
     background-size: cover;
     background-position: center;
     padding-block: var(--section-padding);
