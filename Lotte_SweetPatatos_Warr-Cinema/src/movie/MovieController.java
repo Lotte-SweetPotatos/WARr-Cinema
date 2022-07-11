@@ -34,7 +34,7 @@ public class MovieController extends HttpServlet {
 				return;
 			}
 
-			final Optional<Long> movieId = Optional.ofNullable(Long.parseLong(req.getParameter("id")));
+			final Optional<Long> movieId = Optional.ofNullable(Long.parseLong(req.getParameter("movieId")));
 
 			if (movieId.isEmpty()) {
 				resp.sendRedirect("movie/main.jsp");
