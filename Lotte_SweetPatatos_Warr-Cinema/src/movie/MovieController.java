@@ -27,8 +27,7 @@ public class MovieController extends HttpServlet {
         }
 
         if ("main".equals(param.get())) {
-            System.out.println("hre");
-            List<MovieDto> allMovie = movieDao.findAllMovie();
+            List<MovieDto> allMovie = movieDao.findAllMainMovies();
             for (MovieDto movieDto : allMovie) {
                 System.out.println(movieDto.toString());
             }

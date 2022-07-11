@@ -13,12 +13,6 @@ public class MovieDto {
     private String poster;
     private Double percent;
 
-    public MovieDto(String title, Double grade, String poster) {
-        this.title = title;
-        this.grade = grade;
-        this.poster = poster;
-    }
-
 	public MovieDto(String title, String content, double grade, String genre, String director, int runningTime,
 			String openingDate, String poster, double percent) {
 		this.title = title;
@@ -43,6 +37,15 @@ public class MovieDto {
 		this.director = director;
 		this.runningTime = runningTime;
 		this.openingDate = openingDate;
+		this.poster = poster;
+		this.percent = percent;
+	}
+
+	public MovieDto(String title, String content, int runningTime, double grade, String poster, double percent) {
+		this.title = title;
+		this.content = content;
+		this.runningTime = runningTime;
+		this.grade = grade;
 		this.poster = poster;
 		this.percent = percent;
 	}
