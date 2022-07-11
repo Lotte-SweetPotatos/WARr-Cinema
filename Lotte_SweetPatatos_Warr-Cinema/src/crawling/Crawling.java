@@ -31,7 +31,6 @@ public class Crawling {
 	public List<MovieDto> findMovieInfo() throws IOException {
 		
 		String[] moviesNum = { "85999", "82120", "85871", "85997", "85857" };
-
 		List<MovieDto> movieDtos = new ArrayList<>();
 
 		for (String midx : moviesNum) {

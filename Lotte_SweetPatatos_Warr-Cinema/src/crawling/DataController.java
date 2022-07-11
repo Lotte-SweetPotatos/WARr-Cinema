@@ -17,18 +17,14 @@ public class DataController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 		MovieDao dao = MovieDao.getInstance();
-		
 		Crawling craw = Crawling.getInstance();
-		
 		if (dao.findAll().size() == 0) {
-			
 			List<MovieDto> movies = craw.findMovieInfo();
 			
 			dao.create(movies);
 		}
 		
-		resp.sendRedirect("movie/main.jsp");
+		resp.sendRedirect(req.getContextPath()+"/movie/main.jsp");
 	}
 }
