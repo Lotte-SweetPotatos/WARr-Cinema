@@ -88,4 +88,12 @@ public class MovieDto {
 	public double getPercent() {
 		return percent;
 	}
+	
+	public void changeId(Long id) {
+		this.id=id;
+	}
+	
+	public void changeRunningTime(int runningTime) {
+		this.runningTime=runningTime;
+	}
 }

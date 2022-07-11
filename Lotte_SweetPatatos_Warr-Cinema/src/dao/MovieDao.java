@@ -10,6 +10,7 @@ import java.util.List;
 import db.DBClose;
 import db.DBConnection;
 import dto.MovieDto;
+import dto.RunningDto;
 
 /*
  	영화 상세 페이지의 dao
@@ -147,5 +148,40 @@ public class MovieDao {
 		}
 		
 		return true;
+	}
+	
+public List<MovieDto> findIdAndRunningTime() {
+		
+		String sql = " select id,runningTime " + " from movie ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<MovieDto> list = new ArrayList<MovieDto>();
+		
+		try {
+			
+			conn = DBConnection.getConnection();
+			
+			psmt = conn.prepareStatement(sql);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				MovieDto dto=new MovieDto();
+				
+				dto.changeId(rs.getLong(1));
+				dto.changeRunningTime(rs.getInt(2));
+				
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, rs);
+		}
+		
+		return list;
 	}
 }

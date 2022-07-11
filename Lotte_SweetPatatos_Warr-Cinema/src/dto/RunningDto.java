@@ -2,8 +2,8 @@ package dto;
 
 public class RunningDto {
    
-   private int id;
-   private int movie_id;
+   private long id;
+   private long movie_id;
    private String reserveStartTime;
    private String reserveEndTime;
    private int runningTime;
@@ -11,6 +11,22 @@ public class RunningDto {
    private String cineName;
    private int totalSeat;
    private int curSeat;
+   
+   public RunningDto() {
+	// TODO Auto-generated constructor stub
+   }
+   
+   public RunningDto(long movie_id, String reserveStartTime, String reserveEndTime, int runningTime,
+	         String runningDate, String cineName, int totalSeat, int curSeat) {
+	      this.movie_id = movie_id;
+	      this.reserveStartTime = reserveStartTime;
+	      this.reserveEndTime = reserveEndTime;
+	      this.runningTime = runningTime;
+	      this.runningDate = runningDate;
+	      this.cineName = cineName;
+	      this.totalSeat = totalSeat;
+	      this.curSeat = curSeat;
+   }
    
    public RunningDto(int id, int movie_id, String reserveStartTime, String reserveEndTime, int runningTime,
          String runningDate, String cineName, int totalSeat, int curSeat) {
@@ -26,7 +42,7 @@ public class RunningDto {
       this.curSeat = curSeat;
    }
 
-   public int getId() {
+   public long getId() {
       return id;
    }
 
@@ -34,7 +50,7 @@ public class RunningDto {
       this.id = id;
    }
 
-   public int getMovie_id() {
+   public long getMovie_id() {
       return movie_id;
    }
 

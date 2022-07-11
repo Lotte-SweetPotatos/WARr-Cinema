@@ -29,13 +29,26 @@ public class MovieController extends HttpServlet {
 		}
 		
 		 TicketDao dao=TicketDao.getInstance();
+		 System.out.println("get");
 
 		 if("ticket".equals(param.get())) {
+			 
+			 String movieId=req.getParameter("movieId");
+			 
+			 List<MovieDto> list= dao.findMovies();
+			 req.setAttribute("movieList",list);
+         
+			 
+			 
+			 if(movieId!=null && !movieId.equals("")) { // movie 선택 안하는 경우
 				 
-	         List<MovieDto> list= dao.findMovies();
-	         req.setAttribute("movieList",list);
-	         
-	         forward("movie/ticket.jsp",req,resp);
+				 req.setAttribute("movieId",movieId);
+			 }
+			 else {
+				 req.setAttribute("movieId","-1");
+			 }
+				 
+			 forward("movie/ticket.jsp",req,resp);
 	         
 	     }
 		 else  if("findTimeTable".equals(param.get())) {
@@ -50,31 +63,29 @@ public class MovieController extends HttpServlet {
 	         resp.setContentType("application/x-json; charset=utf-8");
 	         resp.getWriter().print(obj);
 	      }
+		 else if("reserveTicket".equals(param.get())){
+	    	  
+			 int memberId=Integer.parseInt(req.getParameter("memberId")); 
+	         int runningId=Integer.parseInt(req.getParameter("selRunningId"));
+	         int movieId=Integer.parseInt(req.getParameter("selMovieId"));
+	         
+	         reserveTicket(memberId,runningId,movieId);
+	         
+	         // TODO: 예매 후 마이페이지 이동
+	         req.setAttribute("userId",memberId);
+	         forward("member/mypage.jsp",req,resp);
+	      }
+	
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		 String param=req.getParameter("param");
-	      System.out.println(param);
+	      System.out.println("post");
 	      
 	      TicketDao dao=TicketDao.getInstance();
 	      
-	      if("reserveTicket".equals(param)){
-	    	  
-	    	  System.out.println("reserveTicket");
-	         
-			 int memberId=Integer.parseInt(req.getParameter("memberId")); 
-	         int runningId=Integer.parseInt(req.getParameter("selRunningId"));
-	         int movieId=Integer.parseInt(req.getParameter("selMovieId"));
-	         
-	         System.out.println(memberId+" "+runningId+" "+movieId);
-	         
-	         
-	         reserveTicket(memberId,runningId,movieId);
-	         
-	         // TODO: 예매 후 마이페이지 이동
-	      }
-	
+	      
 	}
 	
 	public void reserveTicket(int userId, int runningId, int movieId) {
