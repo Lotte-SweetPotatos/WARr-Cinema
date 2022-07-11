@@ -74,6 +74,28 @@ public class MemberController extends HttpServlet {
             jsonObject.put("signupSuccess", signup(req));
             resp.getWriter().println(jsonObject);
         }
+        
+        if ("mypage".equals(param)) {
+            int user_id = Integer.parseInt(req.getParameter("user_id"));
+            JSONObject jsonob = memberDao.findByReserve(user_id);
+            req.getSession().setAttribute("reserve", jsonob);
+            resp.sendRedirect("member/mypage.jsp");
+		}
+
+        if ("cancel".equals(param)) {
+            int user_id = Integer.parseInt(req.getParameter("user_id"));
+            int movie_id = Integer.parseInt(req.getParameter("movie_id"));
+            int running_id = Integer.parseInt(req.getParameter("running_id"));
+            boolean isSuccess = memberDao.cancelReserve(user_id, movie_id, running_id);
+            String msg = "NO";
+            req.getSession().setAttribute("cancle", msg);
+            if (isSuccess) {
+              msg = "Success";
+              JSONObject jsonob = memberDao.findByReserve(user_id);
+              req.getSession().setAttribute("reserve", jsonob);
+            }
+            resp.sendRedirect("member/mypage.jsp");
+         }
     }
 
     private boolean signup(HttpServletRequest req) {
