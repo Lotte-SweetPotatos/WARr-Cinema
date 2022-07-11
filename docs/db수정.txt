@@ -1,0 +1,9 @@
+
+movie -> poster 1000
+
+
+cine_num ->cine_name
+
+passward -> password
+
+_빼기

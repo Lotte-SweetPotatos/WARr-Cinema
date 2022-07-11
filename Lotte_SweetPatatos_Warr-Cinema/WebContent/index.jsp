@@ -1,27 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<%@page import="dao.MovieDao"%>
+<%@page import="crawling.Crawling"%>
+<%@page import="db.DBClose"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="db.DBConnection"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="org.jsoup.select.Elements"%>
+<%@page import="org.jsoup.nodes.Document"%>
+<%@page import="org.jsoup.Jsoup"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.io.IOException"%>
+<%@page import="dto.MovieDto"%>
+<%@page import="java.util.List"%>
+<%@page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
-</head>
-<body>
-<h1>Lotte SweetPhotatos</h1>
-<button type="button" onclick="move()">예매하기</button>
-
-<button type="button" onclick="mypage()">내 정보</button>
-
-
-
-<script type="text/javascript">
-
-function move(){
-	location.href="movie?param=ticket";
-   /* location.href = "movie?param='ticket'"; */
-}
-</script>
-
-</body>
-</html>

@@ -17,11 +17,10 @@ public class MovieDto {
 	}
 
 	public MovieDto(long id, String title) {
-		super();
 		this.id = id;
 		this.title = title;
 	}
-
+	
 	public MovieDto(String title, String content, double grade, String genre, String director, int runningTime,
 			String openingDate, String poster, double percent) {
 		this.title = title;

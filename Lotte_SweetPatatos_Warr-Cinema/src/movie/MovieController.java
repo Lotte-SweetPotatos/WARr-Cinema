@@ -1,6 +1,7 @@
 package movie;
 
 import java.io.IOException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,7 @@ import dto.RunningDto;
 import net.sf.json.JSONObject;
 
 @WebServlet("/movie")
-public class MovieContorller extends HttpServlet {
+public class MovieController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,13 +30,6 @@ public class MovieContorller extends HttpServlet {
 		
 		 TicketDao dao=TicketDao.getInstance();
 
-			/*
-			 * if("ticket".equals(param.get())) { resp.sendRedirect("movie/ticket.jsp");
-			 * 
-			 * }
-			 * 
-			 * else
-			 */
 		 if("ticket".equals(param.get())) {
 				 
 	         List<MovieDto> list= dao.findMovies();
@@ -56,7 +50,6 @@ public class MovieContorller extends HttpServlet {
 	         resp.setContentType("application/x-json; charset=utf-8");
 	         resp.getWriter().print(obj);
 	      }
-
 	}
 
 	@Override
