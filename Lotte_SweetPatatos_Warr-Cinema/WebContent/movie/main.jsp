@@ -1,32 +1,68 @@
-<%@page import="dto.MemberDto"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page import="java.lang.reflect.Member" %>
+<%@ page import="dao.MovieDao" %>
+<%@ page import="dto.MovieDto" %>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    MovieDao movieDao = MovieDao.getInstance();
+    List<MovieDto> allMainMovies = movieDao.findAllMainMovies();
+%>
+
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<%
- MemberDto member = (MemberDto)request.getSession().getAttribute("member");
-%>
+    <title>WarCinema</title>
+
+    <!-- my CSS -->
+    <link href="../css/style.css" rel="stylesheet">
+
+    <!--google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Do+Hyeon&family=Rowdies:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <!--google icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- font awesome -->
+    <link href="../fontAwesome/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Main</h1>
-<form  action="../member" method="post">
-	<input type="hidden" name="param" value="mypage">
-	
-	<% if(member != null){ %>
-	<input type="hidden" name="user_id" value=<%=member.getId() %>>
-	<%
-	}else {%>
-		<script>
-	alert('로그인 해 주십시오');
-	location.href = "../member/login.jsp";
-	</script>
-	<%
-	}
-	%>
-	<input type="submit" id="btn" value="mypage">
+
+<heaader class="heaader-container">
+    <div class="heaader-item heaader-main">WarCinema</div>
+</heaader>
+<hr/>
+<form class="nav-container">
+    <div class="nav-item nav-main">임시버튼</div>
+    <div class="nav-item">임시버튼</div>
+    <div class="nav-item">임시버튼</div>
+    <div class="nav-item">임시버튼</div>
 </form>
+
+<div class="main-background">
+    <h4 class="main-title">Movie Ticketing Site</h4>
+    <p class="para-title">즐거운 영화 세상 WarCinma</p>
+</div>
+
+
+<div class="article-mianClass">
+    <div class="article-title"> 현재 상영 영화 목록 </div>
+    <div class="article-card">
+        <%
+            for(int i = 0; i < allMainMovies.size(); i++){
+        %>
+        <div class="article-card-each">
+            <img class="article-img"
+                 src="<%=allMainMovies.get(i).getPoster()%>">
+            <div class="article-content">
+                <p><%=allMainMovies.get(i).getContent()%></p>
+                <p class="article-runningTime"><%=String.valueOf(allMainMovies.get(i).getPercent())%></p>
+                <p class="article-runningTime"><%=String.valueOf(allMainMovies.get(i).getRunningTime())%></p>
+            </div>
+        </div>
+        <%
+            }
+        %>
+    </div>
+</div>
 </body>
 </html>
