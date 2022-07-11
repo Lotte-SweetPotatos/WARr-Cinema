@@ -2,101 +2,88 @@
          pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>Sign-up</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WARr Cinema</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
-            integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
-            crossorigin="anonymous"></script>
-</head>
+    <script src="http://lab.alexcican.com/set_cookies/cookie.js" type="text/javascript"></script>
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css"></head>
 <style>
-    .navbar, .main, #idBtn {
-        font-size: 0.9rem;
-    }
-
-    a {
-        text-decoration: none;
-    }
-
-    .navbar {
-        margin-bottom: 1rem;
-    }
-
-    .navbar-brand {
-        color: #111111;
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin: 0 1rem;
-    }
-
-    .nav-link {
-        color: #111111;
-    }
-
-    a:hover {
-        color: #727272;
-    }
-
-    .form-group {
-        margin: 0.5rem;
+    .form-flex {
+        width: 70%;
     }
 </style>
 <body>
-<nav class="navbar navbar-expand border-bottom">
+<header class="header active" data-header>
     <div class="container">
-        <div class="navbar-nav">
-            <span class="navbar-brand">와르르 시네마</span>
+        <div class="overlay active" data-overlay></div>
+        <div style="font-weight: 700" class="h2">WARr Cinema</div>
+        <div class="header-actions">
+            <button class="btn btn-primary" id="loginBtn">Log in</button>
         </div>
-        <div class="navbar-nav d-flex flex-row w-100">
-            <a class="nav-link" href="/movie/main.jsp">Home </a>
-            <a class="nav-link" href="/movie/ticket.jsp">Reservation </a>
-            <a class="ml-auto nav-link" href="/member/login.jsp">Login</a>
-        </div>
+        <nav class="navbar" data-navbar>
+            <div class="navbar-top">
+                <button class="menu-close-btn" data-menu-close-btn>
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
+            </div>
+            <ul class="navbar-list">
+                <li>
+                    <a href="./index.html" class="navbar-link">Home</a>
+                </li>
+                <li>
+                    <a href="#" class="navbar-link">Reservation</a>
+                </li>
+            </ul>
+        </nav>
     </div>
-</nav>
-<div class="container main d-flex justify-content-center">
-    <div class="card w-50 p-4 mt-4">
-        <form class="form-flex d-flex flex-column" action="<%=request.getContextPath()%>/member" method="post"
-              id="signupForm">
-            <input type="hidden" name="param" value="signup">
-            <div class="form-group">
-                <label for="userId">ID</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="userId">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-danger" id="idBtn">중복 확인</button>
+</header>
+<main>
+    <article>
+        <section class="item">
+            <div class="main-container">
+                <form class="form-flex" action="<%=request.getContextPath()%>/member"
+                      method="post"
+                      id="loginForm">
+                    <input type="hidden" name="param" value="login">
+                    <div class="form-group">
+                        <label class="h3 card-title" for="userId">ID</label>
+                        <input style="width: 100%" type="text" class="form-control" id="userId">
+                        <div class="service-text" style="cursor: pointer" id="idBtn">
+                            👆 아이디 중복 확인
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label class="h3 card-title" for="userId">PASSWORD</label>
+                        <input style="width: 100%" type="password" class="form-control" id="password">
+                    </div>
+                    <div class="form-group">
+                        <label class="h3 card-title" for="userId">NAME</label>
+                        <input style="width: 100%" type="text" class="form-control" id="userName">
+                    </div>
+                    <div class="form-group">
+                        <label class="h3 card-title" for="userId">EMAIL</label>
+                        <input style="width: 100%" type="email" class="form-control" id="email">
+                    </div>
+                    <div class="flex-center-col control">
+                        <div class="flex-center">
+                            <button type="submit" class="btn btn-primary">SIGNUP</button>
+                        </div>
+                        <div class="flex-center">
+                            <p class="service-text">이미 가입한 회원인가요?&nbsp;</p>
+                            <a class="service-text" href="<%=request.getContextPath()%>/member?param=login">로그인</a>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="userId">PASSWORD</label>
-                <input type="password" class="form-control" id="password">
-            </div>
-            <div class="form-group">
-                <label for="userId">NAME</label>
-                <input type="text" class="form-control" id="userName">
-            </div>
-            <div class="form-group">
-                <label for="userId">EMAIL</label>
-                <input type="email" class="form-control" id="email">
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn-danger form-control mt-3 mb-3ƒ">SIGNUP</button>
-            </div>
-            <div class="d-flex flex-column justify-content-center align-items-center mt-3">
-                <p>이미 가입한 회원인가요?</p>
-                <a href="<%=request.getContextPath()%>/member?param=login">로그인</a>
-            </div>
-        </form>
-    </div>
-</div>
+        </section>
+    </article>
+</main>
 <script>
     $('#idBtn').click(function () {
         const $userId = $('#userId');
