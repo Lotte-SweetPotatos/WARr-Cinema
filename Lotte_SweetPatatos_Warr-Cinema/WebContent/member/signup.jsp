@@ -43,7 +43,7 @@
     <article>
         <section class="item">
             <div class="main-container">
-                <form class="form-flex" action="<%=request.getContextPath()%>/member" method="post">
+                <form class="form-flex" action="<%=request.getContextPath()%>/member" method="post" id="signupForm">
                     <input type="hidden" name="param" value="signup">
                     <div class="form-group">
                         <label class="h3 card-title" for="userId">ID</label>
@@ -103,6 +103,40 @@
             },
             error: function () {
                 console.log('error');
+            },
+        });
+    });
+
+    function hasValue(value, name) {
+        if (value.trim() === '') {
+            alert(name + '를 입력해 주세요.')
+            return false;
+        }
+        return true;
+    }
+
+    $('#signupForm').submit(function (e) {
+        e.preventDefault();
+        const form = $(this);
+        const url = form.attr('action');
+
+        if (!hasValue($('#userId').val(), '아이디') || !hasValue($('#password').val(), '비밀번호')) {
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: form.serialize(),
+            success: function (data) {
+                if (data.signupSuccess) {
+                    location.href = '/member/login.jsp';
+                    return
+                }
+                alert('회원가입에 실패했습니다.');
+            },
+            error: function () {
+                console.log('error')
             },
         });
     });

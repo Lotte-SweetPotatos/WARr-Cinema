@@ -31,10 +31,10 @@
             </div>
             <ul class="navbar-list">
                 <li>
-                    <a href="./index.html" class="navbar-link">Home</a>
+                    <a href="/movie/main.jsp" class="navbar-link">Home</a>
                 </li>
                 <li>
-                    <a href="#" class="navbar-link">Reservation</a>
+                    <a href="/movie/ticket.jsp" class="navbar-link">Reservation</a>
                 </li>
             </ul>
         </nav>
@@ -106,7 +106,8 @@
         const form = $(this);
         const url = form.attr('action');
 
-        if (!hasValue($userId.val(), '아이디') || !hasValue($('#password').val(), '비밀번호')) {
+        if (!hasValue($userId.val(), '아이디') || !hasValue($('#password').val(), '비밀번호')
+            || !hasValue($('#userName').val(), '이름') || !hasValue($('#email').val(), '메일 주소')) {
             return;
         }
 

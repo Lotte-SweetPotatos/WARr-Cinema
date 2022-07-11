@@ -70,7 +70,7 @@ public class MemberDao {
         return Optional.empty();
     }
 
-    public void save(MemberDto memberDto) {
+    public boolean save(MemberDto memberDto) {
         String sql = "insert into member(userId, userName, password, email) values(?, ?, ?, ?)";
         try (
                 Connection conn = DBConnection.getConnection();
@@ -80,9 +80,11 @@ public class MemberDao {
             pstmt.setString(2, memberDto.getUserName());
             pstmt.setString(3, memberDto.getPassword());
             pstmt.setString(4, memberDto.getEmail());
-            pstmt.executeUpdate();
+
+            return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 }
