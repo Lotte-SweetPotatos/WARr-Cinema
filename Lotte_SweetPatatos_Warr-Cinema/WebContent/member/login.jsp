@@ -106,8 +106,7 @@
         const form = $(this);
         const url = form.attr('action');
 
-        if (!hasValue($userId.val(), '아이디') || !hasValue($('#password').val(), '비밀번호')
-            || !hasValue($('#userName').val(), '이름') || !hasValue($('#email').val(), '메일 주소')) {
+        if (!hasValue($userId.val(), '아이디') || !hasValue($('#password').val(), '비밀번호')) {
             return;
         }
 
