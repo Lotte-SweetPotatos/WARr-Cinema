@@ -21,6 +21,10 @@
 </head>
 </head>
 <style>
+    .navbar, .main {
+        font-size: 0.9rem;
+    }
+
     a {
         text-decoration: none;
     }

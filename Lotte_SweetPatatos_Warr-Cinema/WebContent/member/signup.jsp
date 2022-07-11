@@ -17,6 +17,10 @@
             crossorigin="anonymous"></script>
 </head>
 <style>
+    .navbar, .main, #idBtn {
+        font-size: 0.9rem;
+    }
+
     a {
         text-decoration: none;
     }
