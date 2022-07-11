@@ -13,7 +13,7 @@ import dto.MovieDto;
 
 public class MovieDao {
 
-    private static final MovieDao movieDao = new MovieDao();
+	private static final MovieDao movieDao = new MovieDao();
 
     private MovieDao() {
         DBConnection.initConnection();
@@ -129,14 +129,14 @@ public class MovieDao {
         String sql = "insert into movie(title, content, grade, genre, director, runningTime, openingDate, poster, percent) "
                 + "values(?,?,?,?,?,?,?,?,?) ";
 
-        Connection conn = null;
-        PreparedStatement psmt = null;
-        int count = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
 
-        try {
-            conn = DBConnection.getConnection();
-            for (MovieDto m : dto) {
-                psmt = conn.prepareStatement(sql);
+		try {
+			conn = DBConnection.getConnection();
+			for (MovieDto m : dto) {
+				psmt = conn.prepareStatement(sql);
 
                 psmt.setString(1, m.getTitle());
                 psmt.setString(2, m.getContent());
