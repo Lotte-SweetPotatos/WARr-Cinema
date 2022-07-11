@@ -46,6 +46,7 @@ public class MemberController extends HttpServlet {
             resp.sendRedirect("main.jsp");
             return;
         }
+
         if ("signup".equals(queryParam.get())) {
             String userId = req.getParameter("userId");
             String password = req.getParameter("password");
