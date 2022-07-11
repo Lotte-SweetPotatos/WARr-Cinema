@@ -25,6 +25,6 @@ public class DataController extends HttpServlet {
 			dao.create(movies);
 		}
 		
-		resp.sendRedirect(req.getContextPath()+"/movie/main.jsp");
+		resp.sendRedirect("movie/main.jsp");
 	}
 }
