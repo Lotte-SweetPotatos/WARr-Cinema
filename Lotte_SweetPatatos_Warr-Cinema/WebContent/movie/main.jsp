@@ -54,9 +54,10 @@
             <img class="article-img"
                  src="<%=allMainMovies.get(i).getPoster()%>">
             <div class="article-content">
-                <p><%=allMainMovies.get(i).getContent()%></p>
-                <p class="article-runningTime"><%=String.valueOf(allMainMovies.get(i).getPercent())%></p>
+                <p class="article-id"><%=allMainMovies.get(i).getId()%></p>
+                <p class="article-title"><%=String.valueOf(allMainMovies.get(i).getTitle())%></p>
                 <p class="article-runningTime"><%=String.valueOf(allMainMovies.get(i).getRunningTime())%></p>
+                <p class="article-grade"><%=String.valueOf(allMainMovies.get(i).getGrade())%></p>
             </div>
         </div>
         <%

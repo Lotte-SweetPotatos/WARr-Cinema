@@ -28,7 +28,7 @@ public class MovieDao {
      * 아직 어떤 정보를 보여줄지 결정이 안난 상황. 변할 수 있음
      */
 	public List<MovieDto> findAllMainMovies() {
-		String sql = "select title, content, runningTime, grade, poster, percent from movie";
+		String sql = "select id, title, runningTime, grade, poster from movie";
 
 		List<MovieDto> movieDtos = new ArrayList<>();
 		try (
@@ -37,13 +37,12 @@ public class MovieDao {
 		) {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				String title = rs.getString(1);
-				String content = rs.getString(2);
+                Long id = rs.getLong(1);
+				String title = rs.getString(2);
                 int runningTime = rs.getInt(3);
                 double grade = rs.getDouble(4);
                 String poster = rs.getString(5);
-                double percent = rs.getDouble(6);
-                movieDtos.add(new MovieDto(title, content, runningTime, grade, poster, percent));
+                movieDtos.add(new MovieDto(id, title, runningTime, grade, poster));
             }
 		} catch (SQLException e) {
 			e.printStackTrace();
