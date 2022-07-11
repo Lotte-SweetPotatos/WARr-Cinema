@@ -23,5 +23,6 @@ window.addEventListener("scroll", function () {
  */
 const loginBtn = document.querySelector("#loginBtn");
 loginBtn.addEventListener("click", function () {
-    location.href = '/member?parma=login';
+    console.log('login')
+    location.href = '/member/login.jsp';
 });
