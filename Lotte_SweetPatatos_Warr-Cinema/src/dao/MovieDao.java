@@ -29,7 +29,6 @@ public class MovieDao {
      */
 	public List<MovieDto> findAllMainMovies() {
 		String sql = "select title, content, runningTime, grade, poster, percent from movie";
-
 		List<MovieDto> movieDtos = new ArrayList<>();
 		try (
 				Connection conn = DBConnection.getConnection();
@@ -44,10 +43,15 @@ public class MovieDao {
                 String poster = rs.getString(5);
                 double percent = rs.getDouble(6);
                 movieDtos.add(new MovieDto(title, content, runningTime, grade, poster, percent));
-   }
+            }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return movieDtos;
+	}
 
 	/*
-	 * @param id : 영화 id
+	 * @param id : �쁺�솕 id
 	 */
 	public MovieDto find(long id) {
 		String sql = " select * " + " from movie " + " where id = ? ";
