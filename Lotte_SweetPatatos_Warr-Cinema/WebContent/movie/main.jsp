@@ -8,5 +8,10 @@
 </head>
 <body>
 <h1>Main</h1>
+<form action="<%=request.getContextPath() %>/movie">
+	<input type="hidden" name="param" value="detail">
+	<input type="hidden" name="id" value="44">
+	<input type="submit" value=상세>
+</form>
 </body>
 </html>

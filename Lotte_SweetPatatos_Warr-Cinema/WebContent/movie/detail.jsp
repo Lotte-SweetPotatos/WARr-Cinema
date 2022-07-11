@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-Optional<Long> movieId = Optional.ofNullable(Long.parseLong(request.getParameter("id"))); // movie id 가져옴
+Optional<String> movieId = Optional.ofNullable((request.getParameter("id"))); // movie id 가져옴
 
 if (movieId.isEmpty()) {
 %>
@@ -15,7 +15,7 @@ if (movieId.isEmpty()) {
 }
 
 MovieDao movieDao = MovieDao.getInstance();
-Optional<MovieDto> movieDto = Optional.ofNullable(movieDao.find(movieId.get()));
+Optional<MovieDto> movieDto = Optional.ofNullable(movieDao.find(Long.parseLong(movieId.get())));
 
 if (movieDto.isEmpty()) {
 %>
