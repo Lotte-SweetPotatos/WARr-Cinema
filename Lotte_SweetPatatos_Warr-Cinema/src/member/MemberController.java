@@ -74,7 +74,7 @@ public class MemberController extends HttpServlet {
             String password = req.getParameter("password");
             String username = req.getParameter("userName");
             String email = req.getParameter("email");
-            memberDao.save(new MemberDto(userId, password, username, email));
+            memberDao.save(new MemberDto(userId, username, password, email));
             resp.sendRedirect("member/login.jsp");
         }
     }
