@@ -90,4 +90,20 @@ public class MovieDto {
 	public double getPercent() {
 		return percent;
 	}
+
+	@Override
+	public String toString() {
+		return "MovieDto{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", content='" + content + '\'' +
+				", grade=" + grade +
+				", genre='" + genre + '\'' +
+				", director='" + director + '\'' +
+				", runningTime=" + runningTime +
+				", openingDate='" + openingDate + '\'' +
+				", poster='" + poster + '\'' +
+				", percent=" + percent +
+				'}';
+	}
 }
