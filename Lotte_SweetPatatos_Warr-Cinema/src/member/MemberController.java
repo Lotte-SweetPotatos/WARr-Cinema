@@ -18,7 +18,7 @@ public class MemberController extends HttpServlet {
     private final MemberDao memberDao = MemberDao.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         final Optional<String> queryParam = Optional.ofNullable(req.getParameter("param"));
         if (isPresentParameter(queryParam)) {
             resp.sendRedirect("movie/main.jsp");
@@ -53,7 +53,7 @@ public class MemberController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         final Optional<String> queryParam = Optional.ofNullable(req.getParameter("param"));
         if (isPresentParameter(queryParam)) {
             resp.sendRedirect("movie/main.jsp");

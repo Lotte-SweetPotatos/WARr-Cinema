@@ -2,19 +2,16 @@ package dto;
 
 public class MovieDto {
 
-	private long id;
-	private String title;
-	private String content;
-	private double grade;
-	private String genre;
-	private String director;
-	private int runningTime;
-	private String openingDate;
-	private String poster;
-	private double percent;
-
-	public MovieDto() {
-	}
+    private Long id;
+    private String title;
+    private String content;
+    private Double grade;
+    private String genre;
+    private String director;
+    private Integer runningTime;
+    private String openingDate;
+    private String poster;
+    private Double percent;
 
 	public MovieDto(String title, String content, double grade, String genre, String director, int runningTime,
 			String openingDate, String poster, double percent) {
@@ -40,6 +37,15 @@ public class MovieDto {
 		this.director = director;
 		this.runningTime = runningTime;
 		this.openingDate = openingDate;
+		this.poster = poster;
+		this.percent = percent;
+	}
+
+	public MovieDto(String title, String content, int runningTime, double grade, String poster, double percent) {
+		this.title = title;
+		this.content = content;
+		this.runningTime = runningTime;
+		this.grade = grade;
 		this.poster = poster;
 		this.percent = percent;
 	}
