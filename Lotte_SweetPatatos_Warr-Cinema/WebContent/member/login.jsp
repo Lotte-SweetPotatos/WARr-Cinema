@@ -50,19 +50,17 @@
     <article>
         <section class="item">
             <div class="main-container">
-                <form class="form-flex" action="<%=request.getContextPath()%>/member"
-                      method="post"
-                      id="loginForm">
+                <form class="form-flex" action="<%=request.getContextPath()%>/member" method="post" id="loginForm">
                     <input type="hidden" name="param" value="login">
                     <div class="form-group">
                         <label class="h3 card-title" for="userId">ID</label>
-                        <input style="width: 100%" type="text" class="form-control" id="userId">
+                        <input style="width: 100%" type="text" class="form-control" name="userId" id="userId">
                         <input style="display: inline" type="checkbox" id="chk_save_id">
                         <label style="display: inline" class="service-text" for="chk_save_id">save id</label>
                     </div>
                     <div class="form-group">
-                        <label class="h3 card-title" for="userId">PASSWORD</label>
-                        <input style="width: 100%" type="text" class="form-control" id="password">
+                        <label class="h3 card-title" for="password">PASSWORD</label>
+                        <input style="width: 100%" type="password" class="form-control" name="password" id="password">
                     </div>
                     <div class="flex-center-col control">
                         <div class="flex-center">

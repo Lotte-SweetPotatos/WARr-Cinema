@@ -47,28 +47,26 @@
     <article>
         <section class="item">
             <div class="main-container">
-                <form class="form-flex" action="<%=request.getContextPath()%>/member"
-                      method="post"
-                      id="loginForm">
-                    <input type="hidden" name="param" value="login">
+                <form class="form-flex" action="<%=request.getContextPath()%>/member" method="post">
+                    <input type="hidden" name="param" value="signup">
                     <div class="form-group">
                         <label class="h3 card-title" for="userId">ID</label>
-                        <input style="width: 100%" type="text" class="form-control" id="userId">
+                        <input style="width: 100%" type="text" class="form-control" id="userId" name="userId">
                         <div class="service-text" style="cursor: pointer" id="idBtn">
                             👆 아이디 중복 확인
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="h3 card-title" for="userId">PASSWORD</label>
-                        <input style="width: 100%" type="password" class="form-control" id="password">
+                        <label class="h3 card-title" for="password">PASSWORD</label>
+                        <input style="width: 100%" type="password" class="form-control" id="password" name="password">
                     </div>
                     <div class="form-group">
-                        <label class="h3 card-title" for="userId">NAME</label>
-                        <input style="width: 100%" type="text" class="form-control" id="userName">
+                        <label class="h3 card-title" for="userName">NAME</label>
+                        <input style="width: 100%" type="text" class="form-control" id="userName" name="userName">
                     </div>
                     <div class="form-group">
-                        <label class="h3 card-title" for="userId">EMAIL</label>
-                        <input style="width: 100%" type="email" class="form-control" id="email">
+                        <label class="h3 card-title" for="email">EMAIL</label>
+                        <input style="width: 100%" type="email" class="form-control" id="email" name="email">
                     </div>
                     <div class="flex-center-col control">
                         <div class="flex-center">
@@ -101,10 +99,10 @@
             },
             success: function (data) {
                 if (data.userExists) {
-                    alert('중복 아이디');
+                    alert('중복되는 아이디는 사용할 수 없습니다.');
                     $userId.val('');
                 } else {
-                    alert('사용할 수 있는 아이디')
+                    alert('사용할 수 있는 아이디입니다.')
                 }
             },
             error: function () {
