@@ -210,15 +210,14 @@ tr:hover {background-color: coral;}
 		$("tr").click(function() {
 			var id = $(this).children('td.id').text();
 			var title = $(this).children('td.title').text();
-
+			
 			$("#selMovieId").val(id);
 			$("#selMovie").val(title);
-
+			$("#selDate").val("");
+			
+			/* 영화 변경할 경우 날짜 초기화 */
+			$('.runningTimeBoard').empty();
 		});
-		
-/* 		$(".selCount").on('change',function(){
-			alert($(this).text());			
-		}); */
 		
 
 		$(".selDay").click(function() {
@@ -240,8 +239,9 @@ tr:hover {background-color: coral;}
 							for (var i = 0; i < arr.length; i++) {
 								var tmp = arr[i];
 												
-								if(tmp.curSeat==0){ // 예약 불가
-									str += "<div class='runningA'>"
+								if(tmp.curSeat==0){ // 예약 불가(남은 좌석 0인 경우)
+									str +="<div class='runningTimeBoard'>" 
+										+"<div class='runningA'>"
 										+ "<span class='runningId' style='display:none;color:#dcdcdc'>"
 										+ tmp.id + "</span>"
 										+ "<strong style='color:#dcdcdc'>"+ tmp.reserveStartTime+ "</strong><br>"
@@ -249,9 +249,10 @@ tr:hover {background-color: coral;}
 										+ tmp.curSeat + "/"+ tmp.totalSeat
 										+ "</span>" + "<span style='color:#dcdcdc'> "
 										+ tmp.cineName
-										+ "관</span></div>";
+										+ "관</span></div></div>";
 								}else{
-									str += "<div class='runningB'>"
+									str +="<div class='runningTimeBoard'>" 
+										+ "<div class='runningB'>"
 										+ "<span class='runningId' style='display:none;'>"
 										+ tmp.id + "</span>"
 										+ "<strong>"+ tmp.reserveStartTime+ "</strong><br>"
@@ -260,7 +261,7 @@ tr:hover {background-color: coral;}
 										+ tmp.totalSeat
 										+ "</span>" + "<span> "
 										+ tmp.cineName
-										+ "관</span></div>";
+										+ "관</span></div></div>";
 								}
 								$('.timetable').html(str);
 							}
