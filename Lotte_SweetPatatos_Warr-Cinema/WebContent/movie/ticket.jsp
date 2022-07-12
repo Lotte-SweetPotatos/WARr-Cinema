@@ -81,12 +81,12 @@
                         </div>
                         <div style="max-height: 16rem; overflow: scroll">
                             <%
-                                for (int i = 0; i < movies.size(); i++) {
+                                for (MovieDto movie: movies) {
                             %>
-                            <div class="reserve-movie movieList selTitle">
+                            <div class="reserve-movie movieList selTitle" id="<%=movie.getId()%>">
                                 <a href="#">
-                                    <h3 id="<%=i%>" class="h3"
-                                        style="font-size: var(--fs-5)"><%=movies.get(i).getTitle()%>
+                                    <h3 class="h3"
+                                        style="font-size: var(--fs-5)"><%=movie.getTitle()%>
                                     </h3>
                                 </a>
                             </div>
@@ -134,7 +134,7 @@
                                 %>
                             </div>
                         </div>
-                        <div class="timetable flex-div">
+                        <div class="timetable flex-div" style="margin-top: 1rem">
                         </div>
                     </div>
                 </div>
@@ -158,7 +158,6 @@
                 </div>
                 <div class="sel-btn flex-center" style="cursor: pointer" onclick="reserve()">
                     <ion-icon name="arrow-forward-outline"></ion-icon>
-                    &nbsp;
                     <h3 class="h3">예매하기</h3>
                 </div>
             </div>
@@ -207,14 +206,17 @@
     }
 
     <% if (movieId != -1) { %>
-    $("#selMovieId").val($(".selTitle").children('a').children('h3').attr('id'));
-    $("#selMovie").val($("#movieList").children('a').children('h3').attr('id'));
+    selectedMovie = $('#<%=movieId%>');
+    $("#selMovieId").val(selectedMovie.attr('id'));
+    $("#selMovie").val(selectedMovie.children('a').children('h3').text());
+
+    changeMovieColor(selectedMovie);
     <% }%>
 
     $('.selTitle').click(function () {
         changeMovieColor($(this));
 
-        const id = $(this).children('a').children('h3').attr('id');
+        const id = $(this).attr('id');
         const title = $(this).children('a').children('h3').text();
 
         $("#selMovieId").val(id);
