@@ -1,16 +1,15 @@
 package dao;
 
+import db.DBClose;
+import db.DBConnection;
+import dto.MovieDto;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import db.DBClose;
-import db.DBConnection;
-import dto.MovieDto;
-import dto.RunningDto;
 
 public class MovieDao {
 
@@ -127,7 +126,7 @@ public class MovieDao {
 
 	public boolean create(List<MovieDto> dto) {
 		String sql = "insert into movie(title, content, grade, genre, director, runningTime, openingDate, poster, percent) "
-				+ "values(?,?,?,?,?,?,?,?,?) ";
+				+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -164,30 +163,24 @@ public class MovieDao {
 	}
 
 	public List<MovieDto> findIdAndRunningTime() {
-
-		String sql = " select id,runningTime " + " from movie ";
+		String sql = " select id , runningTime from movie ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
-		List<MovieDto> list = new ArrayList<MovieDto>();
+		List<MovieDto> movieDtos = new ArrayList<>();
 
 		try {
-
 			conn = DBConnection.getConnection();
-
 			psmt = conn.prepareStatement(sql);
-
 			rs = psmt.executeQuery();
 
-			while(rs.next()) {
-				MovieDto dto=new MovieDto();
-
-				dto.changeId(rs.getLong(1));
-				dto.changeRunningTime(rs.getInt(2));
-
-				list.add(dto);
+			while (rs.next()) {
+				movieDtos.add(new MovieDto(
+						rs.getLong(1),
+						rs.getInt(2)
+				));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -195,6 +188,6 @@ public class MovieDao {
 			DBClose.close(conn, psmt, rs);
 		}
 
-			return list;
+		return movieDtos;
 	}
 }

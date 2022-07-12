@@ -20,8 +20,13 @@ public class MovieDto {
 		this.title = title;
 	}
 
+	public MovieDto(Long id, Integer runningTime) {
+		this.id = id;
+		this.runningTime = runningTime;
+	}
+
 	public MovieDto(String title, String content, double grade, String genre, String director, int runningTime,
-			String openingDate, String poster, double percent) {
+					String openingDate, String poster, double percent) {
 		this.title = title;
 		this.content = content;
 		this.grade = grade;
