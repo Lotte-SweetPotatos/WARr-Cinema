@@ -8,7 +8,7 @@
     MovieDao movieDao = MovieDao.getInstance();
     List<MovieDto> allMainMovies = movieDao.findAllMainMovies();
 
-    final Optional<MemberDto> login = Optional.ofNullable((MemberDto) session.getAttribute("member"));
+    final Optional<Object> login = Optional.ofNullable(session.getAttribute("member"));
 %>
 <html>
 <head>
@@ -32,15 +32,17 @@
         <div class="overlay" data-overlay></div>
         <div style="font-weight: 700" class="h2">WARr Cinema</div>
         <div class="header-actions">
-            <button style="visibility: <%= login.isEmpty() ? "visible" : "hidden"%>" class="btn btn-primary"
-                    id="loginBtn">Log in
-            </button>
-            <a style="visibility: <%= login.isPresent() ? "visible" : "hidden"%>"
-               href=<%= login.map(memberDto -> "/member?param=mypage&userId=" + memberDto.getId()).orElse("#") %>>
-                <button class="btn btn-primary">
-                    mypage
-                </button>
+            <%
+                if (login.isEmpty()) {
+            %>
+            <button class="btn btn-primary" id="loginBtn">Log in</button>
+            <% } else {
+                MemberDto memberDto = (MemberDto) login.get();
+            %>
+            <a href=<%="/member?param=mypage&userId=" + memberDto.getId()%>>
+                <button class="btn btn-primary">mypage</button>
             </a>
+            <% } %>
         </div>
         <nav class="navbar" data-navbar>
             <div class="navbar-top">

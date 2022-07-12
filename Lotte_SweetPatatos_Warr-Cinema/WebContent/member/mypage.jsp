@@ -2,8 +2,7 @@
 <%@page import="org.json.JSONArray" %>
 <%@page import="org.json.JSONObject" %>
 <%@ page import="java.util.Optional" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
     final Optional<MemberDto> login = Optional.ofNullable((MemberDto) session.getAttribute("member"));
     if (login.isEmpty()) {
@@ -73,9 +72,15 @@
         <section class="top-rated">
             <div class="main-container flex-div-col">
                 <div class="info">
-                    <h2 class="h2 section-title" style="width: max-content; margin-top: 2rem;">
-                        <span style="display: inline; color: var(--citrine)"><%=member.getUserName()%></span> 님, 반갑습니다.
-                    </h2>
+                    <div class="flex-div" style="justify-content: space-between">
+                        <h2 class="h2 section-title" style="width: max-content; margin-top: 2rem;">
+                            <span style="display: inline; color: var(--citrine)"><%=member.getUserName()%></span> 님,
+                            반갑습니다.
+                        </h2>
+                        <div style="margin-top: 2rem; font-size: var(--fs-8); cursor: pointer" onclick="logout()">
+                            <p style="color: var(--gray-x)">로그아웃</p>
+                        </div>
+                    </div>
                     <div>
                         <div class="member-info flex-div-col" style="align-items: flex-start">
                             <div>
@@ -184,6 +189,13 @@
     <ion-icon name="chevron-up"></ion-icon>
 </a>
 <script>
+    function logout() {
+        <%
+            request.getSession().removeAttribute("member");
+        %>
+        location.href = "/movie?param=main";
+    }
+
     function submitCancel() {
         const $confirm = confirm('정말 예매를 취소하시겠습니까?');
 
