@@ -48,8 +48,8 @@ public class MemberController extends HttpServlet {
         }
 
         if ("mypage".equals(param)) {
-            int userId = Integer.parseInt(req.getParameter("userId"));
-            JSONObject jsonob = memberDao.findByReserve(userId);
+            int memberId = Integer.parseInt(req.getParameter("memberId"));
+            JSONObject jsonob = memberDao.findByReserve(memberId);
             req.setAttribute("reserve", jsonob);
             req.getRequestDispatcher("member/mypage.jsp").forward(req, resp);
         }

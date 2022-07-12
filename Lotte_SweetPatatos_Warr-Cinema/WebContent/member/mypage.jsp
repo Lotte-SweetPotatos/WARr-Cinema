@@ -4,7 +4,7 @@
 <%@ page import="java.util.Optional" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
-    final Optional<MemberDto> login = Optional.ofNullable((MemberDto) session.getAttribute("member"));
+    final Optional<Object> login = Optional.ofNullable(session.getAttribute("member"));
     if (login.isEmpty()) {
 %>
 <script>
@@ -12,7 +12,7 @@
 </script>
 <%
     }
-    MemberDto member = login.get();
+    MemberDto member = (MemberDto) login.get();
     JSONObject reserve = (JSONObject) request.getAttribute("reserve");
     JSONArray jsonArr = (JSONArray) reserve.get("reserve");
 %>
@@ -40,15 +40,14 @@
         <div class="overlay" data-overlay></div>
         <div style="font-weight: 700" class="h2">WARr Cinema</div>
         <div class="header-actions">
-            <button style="visibility: <%= login.isEmpty() ? "visible" : "hidden"%>" class="btn btn-primary"
-                    id="loginBtn">Log in
-            </button>
-            <a style="visibility: <%= login.isPresent() ? "visible" : "hidden"%>"
-               href=<%= login.map(memberDto -> "/member?param=mypage&userId=" + memberDto.getId()).orElse("#") %>>
-                <button class="btn btn-primary">
-                    mypage
-                </button>
+            <%
+                MemberDto memberDto = (MemberDto) login.get();
+                session.setAttribute("member", memberDto);
+            %>
+            <a href=<%="/member?param=mypage&userId=" + memberDto.getId()%>>
+                <button class="btn btn-primary">mypage</button>
             </a>
+            <% %>
         </div>
         <nav class="navbar" data-navbar>
             <div class="navbar-top">
@@ -77,7 +76,7 @@
                             <span style="display: inline; color: var(--citrine)"><%=member.getUserName()%></span> 님,
                             반갑습니다.
                         </h2>
-                        <div style="margin-top: 2rem; font-size: var(--fs-8); cursor: pointer" onclick="logout()">
+                        <div style="margin-top: 2rem; font-size: var(--fs-8); cursor: pointer">
                             <p style="color: var(--gray-x)">로그아웃</p>
                         </div>
                     </div>
@@ -189,13 +188,6 @@
     <ion-icon name="chevron-up"></ion-icon>
 </a>
 <script>
-    function logout() {
-        <%
-            request.getSession().removeAttribute("member");
-        %>
-        location.href = "/movie?param=main";
-    }
-
     function submitCancel() {
         const $confirm = confirm('정말 예매를 취소하시겠습니까?');
 

@@ -90,7 +90,7 @@ public class MemberDao {
         return false;
     }
 
-    public JSONObject findByReserve(int user_id) {
+    public JSONObject findByReserve(int memberId) {
         String sql = " select title,poster,cineName,runningDate,reserveStartTime,reserveEndTime, mv.id , rn.id from member m "
                 + "	join reservation r " + "	on r.member_id = m.id " + "	join movie mv " + "	on r.movie_id = mv.id "
                 + "	join running rn " + "	on r.running_id = rn.id " + " where m.id = ?; ";
@@ -101,7 +101,8 @@ public class MemberDao {
                 Connection conn = DBConnection.getConnection();
                 PreparedStatement psmt = conn.prepareStatement(sql);
         ) {
-            psmt.setInt(1, user_id);
+            psmt.setInt(1, memberId);
+
             try (
                     ResultSet rs = psmt.executeQuery();
             ) {
