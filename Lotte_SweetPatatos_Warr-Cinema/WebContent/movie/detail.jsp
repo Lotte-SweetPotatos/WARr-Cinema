@@ -53,7 +53,7 @@
                     <a href="/movie/main.jsp" class="navbar-link">Home</a>
                 </li>
                 <li>
-                    <a href="/movie/ticket.jsp" class="navbar-link">Reservation</a>
+                    <a onclick="reserveBtn(<%=login.map(o -> ((MemberDto) o).getId()).orElse(null)%>)" class="navbar-link">Reservation</a>
                 </li>
             </ul>
         </nav>

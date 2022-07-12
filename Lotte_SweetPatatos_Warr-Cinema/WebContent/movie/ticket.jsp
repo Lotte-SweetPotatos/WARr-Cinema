@@ -81,7 +81,7 @@
                         </div>
                         <div style="max-height: 16rem; overflow: scroll">
                             <%
-                                for (MovieDto movie: movies) {
+                                for (MovieDto movie : movies) {
                             %>
                             <div class="reserve-movie movieList selTitle" id="<%=movie.getId()%>">
                                 <a href="#">
@@ -103,8 +103,15 @@
                                 <%
                                     GregorianCalendar today = new GregorianCalendar();
                                     int year = today.get(today.YEAR);
-                                    int month = today.get(today.MONTH) + 1; %>
-                                <h3 class="h3 detail-subtitle"><%=year%>년 <%=month %>월</h3>
+                                    int month = today.get(today.MONTH) + 1;
+
+                                    String temp = String.valueOf(month);
+                                    String mon = temp.length() < 2 ? "0" + temp : temp;
+                                %>
+                                <div class="flex-div">
+                                    <h3 id="year" class="h3 detail-subtitle"><%=year%>-</h3>
+                                    <h3 id="mon" class="h3 detail-subtitle"><%=mon%></h3>
+                                </div>
                             </div>
                         </div>
                         <div class="day flex-div">
@@ -192,11 +199,15 @@
         selectedMovie.children('a').children('h3').css('color', 'var(--eerie-black');
     }
 
+    function changeDayColorBlack(selected) {
+        selected.css('background-color', 'var(--eerie-black)');
+        selected.children('div').children('h3.day').css('color', 'var(--white)')
+        selected.children('div').children('h3').css('color', 'var(--white)')
+    }
+
     function changeDayColor(newSelected) {
         if (selectedDay !== null) {
-            selectedDay.css('background-color', 'var(--eerie-black)');
-            selectedDay.children('div').children('h3.day').css('color', 'var(--white)')
-            selectedDay.children('div').children('h3').css('color', 'var(--white)')
+            changeDayColorBlack(selectedDay);
         }
 
         selectedDay = newSelected;
@@ -221,13 +232,21 @@
 
         $("#selMovieId").val(id);
         $("#selMovie").val(title);
+
+        $("#selDate").val("");
+        changeDayColorBlack(selectedDay);
+
+        $(".timetable").empty();
+        $("#selTime").val("");
     });
 
     $(".selDay").click(function () {
         changeDayColor($(this));
 
-        const reserveDate = "2022.07." + $(this).children('div').children('h3.day').text();
-        $('#selDate').val(reserveDate.trim());
+        let reserveDate = $('#year').text() + "." + $('#mon').text() + "." + $(this).children('div').children('h3.day').text();
+        reserveDate = reserveDate.replace('-', '').trim()
+
+        $('#selDate').val(reserveDate);
 
         const movieId = $("#selMovieId").val();
 
@@ -236,7 +255,7 @@
             url: "movie?param=findTimeTable",
             data: {
                 "movieId": movieId,
-                "runningDate": reserveDate.trim()
+                "runningDate": reserveDate
             },
             success: function (data) {
                 const arr = data.timeList;

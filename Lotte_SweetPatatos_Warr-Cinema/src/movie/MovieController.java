@@ -68,7 +68,7 @@ public class MovieController extends HttpServlet {
 
 			reserveTicket(memberId, runningId, movieId);
 
-			resp.sendRedirect("member?param=mypage&user_id="+memberId);
+			resp.sendRedirect("member?param=mypage&memberId="+memberId);
 			return;
 		}
 

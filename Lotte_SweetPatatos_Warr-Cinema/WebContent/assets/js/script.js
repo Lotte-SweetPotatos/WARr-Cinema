@@ -25,3 +25,14 @@ const loginBtn = document.querySelector("#loginBtn");
 loginBtn.addEventListener("click", function () {
     location.href = '/member/login.jsp';
 });
+
+function reserveBtn(memberId) {
+    if (memberId) {
+        location.href = '/movie?param=ticket&memberId=' + memberId
+        return;
+    }
+    let yes = confirm('로그인 하시겠습니까?');
+    if (yes) {
+        location.href = '/member?param=login';
+    }
+}
