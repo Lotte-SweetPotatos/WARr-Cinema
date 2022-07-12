@@ -26,7 +26,6 @@
     <link href="../fontAwesome/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-
 <heaader class="heaader-container">
     <div class="heaader-item heaader-main">WarCinema</div>
 </heaader>
@@ -64,6 +63,5 @@
         %>
     </div>
 </div>
-
 </body>
 </html>
