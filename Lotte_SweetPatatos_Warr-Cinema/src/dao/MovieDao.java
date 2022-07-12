@@ -11,6 +11,10 @@ import db.DBClose;
 import db.DBConnection;
 import dto.MovieDto;
 
+/*
+ 	영화 상세 페이지의 dao
+*/
+
 public class MovieDao {
 
 	private static final MovieDao movieDao = new MovieDao();

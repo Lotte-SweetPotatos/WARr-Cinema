@@ -6,22 +6,22 @@
          
 <%--<%
 Optional<Long> movieId = Optional.ofNullable(Long.parseLong(request.getParameter("id"))); // movie id 가져옴
-
     if (movieId.isEmpty()) {
 %>
-<script type="text/javascript">
+    <script type="text/javascript">
     location.href = "movie/main.jsp";
-</script>
+    </script>
 <%
     }
+    
     MovieDao movieDao = MovieDao.getInstance();
-    Optional<MovieDto> movieDto = Optional.ofNullable(movieDao.find(movieId.get()));
+    Optional<MovieDto> movieDto = Optional.ofNullable(movieDao.find(Long.parseLong(movieId.get())));
 
     if (movieDto.isEmpty()) {
 %>
-<script type="text/javascript">
+    <script type="text/javascript">
     location.href = "movie/main.jsp";
-</script>
+    </script>
 <%
 }
 --%>

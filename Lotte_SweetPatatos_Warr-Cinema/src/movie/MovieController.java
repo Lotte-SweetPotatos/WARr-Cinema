@@ -16,7 +16,7 @@ import java.util.Optional;
 @WebServlet("/movie")
 public class MovieController extends HttpServlet {
 
-	private MovieDao movieDao = MovieDao.getInstance();
+	final private MovieDao movieDao = MovieDao.getInstance();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,6 +37,7 @@ public class MovieController extends HttpServlet {
 			final Optional<Long> movieId = Optional.ofNullable(Long.parseLong(req.getParameter("movieId")));
 
 			if (movieId.isEmpty()) {
+
 				resp.sendRedirect("movie/main.jsp");
 				return;
 			}
