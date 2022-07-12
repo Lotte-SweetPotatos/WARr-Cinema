@@ -213,5 +213,9 @@
     }
 </script>
 <script src="../assets/js/script.js"></script>
+<a href="#top" class="go-top" data-go-top>
+    <ion-icon name="chevron-up"></ion-icon>
+</a>
+<script src="../assets/js/script.js"></script>
 </body>
 </html>
