@@ -96,7 +96,7 @@
                                 <time><%=movie.getDirector()%>
                                 </time>
                             </div>
-                            <div>
+                            <div class="rating">
                                 <ion-icon name="ticket-outline"></ion-icon>
                                 <data><%=movie.getPercent()%>%</data>
                             </div>

@@ -11,24 +11,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/*
+ 	영화 상세 페이지의 dao
+*/
+
 public class MovieDao {
 
 	private static final MovieDao movieDao = new MovieDao();
 
-	private MovieDao() {
-		DBConnection.initConnection();
-	}
+    private MovieDao() {
+        DBConnection.initConnection();
+    }
 
-	public static MovieDao getInstance() {
-		return movieDao;
-	}
+    public static MovieDao getInstance() {
+        return movieDao;
+    }
 
-	/**
-	 * main페이지에 보여줄 영화정보.
-	 * 아직 어떤 정보를 보여줄지 결정이 안난 상황. 변할 수 있음
-	 */
+    /**
+     * main페이지에 보여줄 영화정보.
+     * 아직 어떤 정보를 보여줄지 결정이 안난 상황. 변할 수 있음
+     */
 	public List<MovieDto> findAllMainMovies() {
-		String sql = "select id, title, openingDate, runningTime, grade, poster from movie";
+		String sql = "select id, title, runningTime, grade, poster, openingDate  from movie";
 		List<MovieDto> movieDtos = new ArrayList<>();
 		try (
 				Connection conn = DBConnection.getConnection();
@@ -36,19 +41,19 @@ public class MovieDao {
 		) {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				Long id = rs.getLong(1);
-				String title = rs.getString(2);
-				String openingDate = rs.getString(3);
-				int runningTime = rs.getInt(4);
-				double grade = rs.getDouble(5);
-				String poster = rs.getString(6);
-				movieDtos.add(new MovieDto(id, title, openingDate, runningTime, grade, poster));
-			}
+                Long id = rs.getLong(1);
+				        String title = rs.getString(2);
+                int runningTime = rs.getInt(3);
+                double grade = rs.getDouble(4);
+                String poster = rs.getString(5);
+                String openingDate = rs.getString(6);
+                movieDtos.add(new MovieDto(id, title, runningTime, grade, poster, openingDate));
+            }
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return movieDtos;
-	}
+   }
 
 	/*
 	 * @param id : 영화 id
@@ -66,24 +71,24 @@ public class MovieDao {
 			psmt.setLong(1, id);
 			rs = psmt.executeQuery();
 
-			while (rs.next()) {
-				int i = 1;
-				movie = new MovieDto(rs.getLong(i++),
-						rs.getString(i++),
-						rs.getString(i++),
-						rs.getDouble(i++),
-						rs.getString(i++),
-						rs.getString(i++),
-						rs.getInt(i++),
-						rs.getString(i++),
-						rs.getString(i++),
-						rs.getDouble(i++));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBClose.close(conn, psmt, rs);
-		}
+            while (rs.next()) {
+                int i = 1;
+                movie = new MovieDto(rs.getLong(i++),
+                        rs.getString(i++),
+                        rs.getString(i++),
+                        rs.getDouble(i++),
+                        rs.getString(i++),
+                        rs.getString(i++),
+                        rs.getInt(i++),
+                        rs.getString(i++),
+                        rs.getString(i++),
+                        rs.getDouble(i++));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBClose.close(conn, psmt, rs);
+        }
 
 		return movie;
 	}
@@ -161,9 +166,9 @@ public class MovieDao {
 
 		return true;
 	}
-
+	
 	public List<MovieDto> findIdAndRunningTime() {
-		String sql = " select id , runningTime from movie ";
+		String sql = " select id, runningTime from movie ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;

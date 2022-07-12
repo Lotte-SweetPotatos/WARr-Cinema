@@ -55,7 +55,7 @@
                     <a href="/movie/main.jsp" class="navbar-link">Home</a>
                 </li>
                 <li>
-                    <a href="/movie/ticket.jsp" class="navbar-link">Reservation</a>
+                    <a href="/movie?param=ticket" class="navbar-link">Reservation</a>
                 </li>
             </ul>
         </nav>
