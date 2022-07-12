@@ -10,6 +10,7 @@ import java.util.List;
 import db.DBClose;
 import db.DBConnection;
 import dto.MovieDto;
+import dto.RunningDto;
 
 /*
  	영화 상세 페이지의 dao
@@ -32,7 +33,6 @@ public class MovieDao {
      * 아직 어떤 정보를 보여줄지 결정이 안난 상황. 변할 수 있음
      */
 	public List<MovieDto> findAllMainMovies() {
-
 		String sql = "select id, title, runningTime, grade, poster, openingDate  from movie";
 		List<MovieDto> movieDtos = new ArrayList<>();
 		try (
@@ -42,7 +42,7 @@ public class MovieDao {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
                 Long id = rs.getLong(1);
-				String title = rs.getString(2);
+				        String title = rs.getString(2);
                 int runningTime = rs.getInt(3);
                 double grade = rs.getDouble(4);
                 String poster = rs.getString(5);
@@ -142,28 +142,64 @@ public class MovieDao {
 			for (MovieDto m : dto) {
 				psmt = conn.prepareStatement(sql);
 
-                psmt.setString(1, m.getTitle());
-                psmt.setString(2, m.getContent());
-                psmt.setDouble(3, m.getGrade());
-                psmt.setString(4, m.getGenre());
-                psmt.setString(5, m.getDirector());
-                psmt.setInt(6, m.getRunningTime());
-                psmt.setString(7, m.getOpeningDate());
-                psmt.setString(8, m.getPoster());
-                psmt.setDouble(9, m.getPercent());
 
-                count = psmt.executeUpdate();
+				psmt.setString(1, m.getTitle());
+				psmt.setString(2, m.getContent());
+				psmt.setDouble(3, m.getGrade());
+				psmt.setString(4, m.getGenre());
+				psmt.setString(5, m.getDirector());
+				psmt.setInt(6, m.getRunningTime());
+				psmt.setString(7, m.getOpeningDate());
+				psmt.setString(8, m.getPoster());
+				psmt.setDouble(9, m.getPercent());
 
-                if (count != 1) {
-                    return false;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DBClose.close(conn, psmt, null);
-        }
+				count = psmt.executeUpdate();
 
-        return true;
-    }
+				if (count != 1) {
+					return false;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, null);
+		}
+
+		return true;
+	}
+
+	public List<MovieDto> findIdAndRunningTime() {
+		
+		String sql = " select id,runningTime " + " from movie ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<MovieDto> list = new ArrayList<MovieDto>();
+		
+		try {
+			
+			conn = DBConnection.getConnection();
+			
+			psmt = conn.prepareStatement(sql);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				MovieDto dto=new MovieDto();
+				
+				dto.changeId(rs.getLong(1));
+				dto.changeRunningTime(rs.getInt(2));
+				
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, rs);
+		}
+		
+			return list;
+	}
 }
