@@ -2,6 +2,7 @@ package member;
 
 import dao.MemberDao;
 
+
 import dto.MemberDto;
 import net.sf.json.JSONObject;
 
@@ -19,7 +20,7 @@ public class MemberController extends HttpServlet {
     private final MemberDao memberDao = MemberDao.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         final Optional<String> queryParam = Optional.ofNullable(req.getParameter("param"));
         if (isPresentParameter(queryParam)) {
             resp.sendRedirect("movie/main.jsp");
@@ -54,7 +55,7 @@ public class MemberController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         final Optional<String> queryParam = Optional.ofNullable(req.getParameter("param"));
         if (isPresentParameter(queryParam)) {
             resp.sendRedirect("movie/main.jsp");
@@ -63,21 +64,37 @@ public class MemberController extends HttpServlet {
 
         final String param = queryParam.get();
 
+        resp.setContentType("application/x-json; charset=utf-8");
+        final JSONObject jsonObject = new JSONObject();
+
         if ("login".equals(param)) {
-            resp.setContentType("application/x-json; charset=utf-8");
-            final JSONObject jsonObject = new JSONObject();
             jsonObject.put("loginSuccess", login(req));
             resp.getWriter().println(jsonObject);
         }
 
         if ("signup".equals(param)) {
-            String userId = req.getParameter("userId");
-            String password = req.getParameter("password");
-            String username = req.getParameter("userName");
-            String email = req.getParameter("email");
-            memberDao.save(new MemberDto(userId, password, username, email));
-            resp.sendRedirect("member/login.jsp");
+            jsonObject.put("signupSuccess", signup(req));
+            resp.getWriter().println(jsonObject);
         }
+    }
+
+    private boolean signup(HttpServletRequest req) {
+        final Optional<String> queryUserId = Optional.ofNullable(req.getParameter("userId"));
+        final Optional<String> queryPassword = Optional.ofNullable(req.getParameter("password"));
+        final Optional<String> queryName = Optional.ofNullable(req.getParameter("userName"));
+        final Optional<String> queryEmail = Optional.ofNullable(req.getParameter("email"));
+
+        if (isPresentParameter(queryUserId) || isPresentParameter(queryPassword)
+                || isPresentParameter(queryName) || isPresentParameter(queryEmail)) {
+            return false;
+        }
+
+        final String userId = queryUserId.get();
+        final String password = queryPassword.get();
+        final String userName = queryName.get();
+        final String email = queryEmail.get();
+
+        return memberDao.save(new MemberDto(userId, userName, password, email));
     }
 
     private boolean login(HttpServletRequest req) {

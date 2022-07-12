@@ -1,3 +1,7 @@
+<%@page import="java.util.GregorianCalendar"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.time.LocalDate"%>
 <%@page import="dto.MovieDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -146,20 +150,31 @@ tr:hover {background-color: coral;}
 		<div class="cal">
 			<div class="day">
 				<div class="month">
-					<h5>7월</h5>
+				<% 
+					GregorianCalendar today = new GregorianCalendar();
+					int year = today.get ( today.YEAR ); 
+					int month = today.get ( today.MONTH ) + 1; %>
+					<h5><%=year%>년 <%=month %>월</h5>
 				</div>
 				<div class="date">
 					<%
-					int day = 10;
+					int day = today.get(today.DAY_OF_MONTH);
+					int yoil = today.get(today.DAY_OF_WEEK)-1;
+					int lastDayOfMonth= today.getMaximum(Calendar.DAY_OF_MONTH);
 					String[] week = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 					for (int i = 0; i < 7; ++i) {
 						int tmp = i + day;
+						if(tmp>=lastDayOfMonth){
+							day-=(lastDayOfMonth+i-1);
+							/* tmp-=lastDayOfMonth; */
+						}
+						
 					%>
 					<div class="selDay">
 						<h3>
 							<strong><%=tmp%></strong>
 						</h3>
-						<br> <span><%=week[i]%></span>
+						<br> <span><%=week[(yoil+i)%7]%></span>
 					</div>
 					<%
 					}
@@ -171,16 +186,13 @@ tr:hover {background-color: coral;}
 			</div>
 		</div>
 
-		
-
 		<div class="detail">
-			<!-- form action="movie?param=reserveTicket" method="post"> -->
 				<input type="hidden" name="memberId" id="memberId"> 
 				영화 : <input id="selMovie" name="selMovie" type="text" readonly required><br>
 				<input id="selMovieId" name="selMovieId" type="hidden"> 
 				날짜: <input id="selDate" name="selDate" type="text" readonly required><br>
 				<input type="hidden" name="selRunningId" id="selRunningId">
-				시간 : <input id="selTime" name="selTime" type="text" readonly required>
+				시간 : <input id="selTime" name="selTime" type="text" readonly required><br>
 				
 				<input type="button" onclick="reserve()"class="btn" value="예매하기">
 			<!-- </form> -->
@@ -203,70 +215,68 @@ tr:hover {background-color: coral;}
 			$("#selMovie").val(title);
 
 		});
+		
+/* 		$(".selCount").on('change',function(){
+			alert($(this).text());			
+		}); */
+		
 
-		$(".selDay")
-				.click(
-						function() {
-							var reserveDate = "2022.07."
-									+ $(this).children('h3').children('strong')
-											.text();
-							$('#selDate').val(reserveDate);
+		$(".selDay").click(function() {
+				var reserveDate = "2022.07."+ $(this).children('h3').children('strong').text();
+				$('#selDate').val(reserveDate);
 
-							var movieId = $("#selMovieId").val();
+				var movieId = $("#selMovieId").val();
 
-							$.ajax({
-										type : "get",
-										url : "movie?param=findTimeTable",
-										data : {
-											"movieId" : movieId,
-											"runningDate" : reserveDate
-										},
-										success : function(data) {
-
-											var arr = data.timeList;
-											var str = "";
-											for (var i = 0; i < arr.length; i++) {
-												var tmp = arr[i];
+				$.ajax({
+						type : "get",
+						url : "movie?param=findTimeTable",
+						data : {
+							"movieId" : movieId,
+							"runningDate" : reserveDate
+							},
+						success : function(data) {
+							var arr = data.timeList;
+							var str = "";
+							for (var i = 0; i < arr.length; i++) {
+								var tmp = arr[i];
 												
-												if(tmp.curSeat==0){ // 예약 불가
-													str += "<div class='runningA'>"
-														+ "<span class='runningId' style='display:none;color:#dcdcdc'>"
-														+ tmp.id + "</span>"
-														+ "<strong style='color:#dcdcdc'>"+ tmp.reserveStartTime+ "</strong><br>"
-														+ "<span style='color:#dcdcdc'>"
-														+ tmp.curSeat + "/"
-														+ tmp.totalSeat
-														+ "</span>" + "<span style='color:#dcdcdc'> "
-														+ tmp.cineName
-														+ "관</span></div>";
-												}else{
-
-												str += "<div class='runningB'>"
-														+ "<span class='runningId' style='display:none;'>"
-														+ tmp.id + "</span>"
-														+ "<strong>"+ tmp.reserveStartTime+ "</strong><br>"
-														+ "<span>"
-														+ tmp.curSeat + "/"
-														+ tmp.totalSeat
-														+ "</span>" + "<span> "
-														+ tmp.cineName
-														+ "관</span></div>";
-												}
-											}
-
-											$('.timetable').html(str);
-										},
-										error : function() {
-											alert("영화를 먼저 선택해주세요");
-										},
-										complete : function() {
-											$(".runningB").click(function() {
-													$('#selTime').val($(this).children('strong').text());
-													$('#selRunningId').val($(this).children('span.runningId').text());
-													$('#memberId').val(1);
-											});
-										}
-									});
+								if(tmp.curSeat==0){ // 예약 불가
+									str += "<div class='runningA'>"
+										+ "<span class='runningId' style='display:none;color:#dcdcdc'>"
+										+ tmp.id + "</span>"
+										+ "<strong style='color:#dcdcdc'>"+ tmp.reserveStartTime+ "</strong><br>"
+										+ "<span style='color:#dcdcdc'>"
+										+ tmp.curSeat + "/"+ tmp.totalSeat
+										+ "</span>" + "<span style='color:#dcdcdc'> "
+										+ tmp.cineName
+										+ "관</span></div>";
+								}else{
+									str += "<div class='runningB'>"
+										+ "<span class='runningId' style='display:none;'>"
+										+ tmp.id + "</span>"
+										+ "<strong>"+ tmp.reserveStartTime+ "</strong><br>"
+										+ "<span>"
+										+ tmp.curSeat + "/"
+										+ tmp.totalSeat
+										+ "</span>" + "<span> "
+										+ tmp.cineName
+										+ "관</span></div>";
+								}
+								$('.timetable').html(str);
+							}
+								
+								},
+						error : function() {
+							alert("영화를 먼저 선택해주세요");
+						},
+						complete : function() {
+							$(".runningB").click(function() {
+								$('#selTime').val($(this).children('strong').text());
+								$('#selRunningId').val($(this).children('span.runningId').text());
+								$('#memberId').val(1);
+							});
+						}
+						});
 						});
 		
 	function reserve(){

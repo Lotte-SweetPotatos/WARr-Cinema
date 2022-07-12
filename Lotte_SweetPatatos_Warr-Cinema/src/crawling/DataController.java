@@ -1,6 +1,8 @@
 package crawling;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -40,8 +42,27 @@ public class DataController extends HttpServlet {
 					{"9:00","11:50","14:40","17:30","20:20"},
 			        {"10:00","12:45","15:00","18:20","20:00"}
 			};
-			String[] runningDate = { "2022.07.10", "2022.07.11", "2022.07.12", "2022.07.13", "2022.07.14", "2022.07.15",
-					"2022.07.16" };
+			
+			String[] runningDate =new String[7];
+			GregorianCalendar today = new GregorianCalendar();
+			int year = today.get ( today.YEAR ); 
+			int month = today.get ( today.MONTH ) + 1;
+			int day = today.get(today.DAY_OF_MONTH);
+			int lastDayOfMonth= today.getMaximum(Calendar.DAY_OF_MONTH);
+			for(int i=0;i<7;++i) {
+				int d=day+i;
+				if(d>lastDayOfMonth) {
+					month+=1;
+					day-=lastDayOfMonth+1;
+				}
+				if(month>12) {
+					month-=12;
+					year+=1;
+				}
+				String date=year+"."+String.format("%02d", month)+"."+d;
+				runningDate[i]=date;
+			}
+			
 
 			for (int i = 0; i < movieIds.size(); ++i) { // movie
 				for (int j = 0; j < runningDate.length; ++j) { // runningDate
@@ -58,7 +79,7 @@ public class DataController extends HttpServlet {
 			}
 		}
 
-		resp.sendRedirect("movie/main.jsp");
+		resp.sendRedirect(req.getContextPath()+"/movie/main.jsp");
 	}
 
 	public String getEndTime(String startTime, int runningTime) {
