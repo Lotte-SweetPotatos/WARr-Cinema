@@ -15,6 +15,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
+<style>
+    .center {
+        margin: auto;
+        width: 60%;
+        border: 3px solid black;
+        padding: 10px;
+    }
+</style>
 <body>
 <header class="header" data-header>
     <div class="container">
@@ -74,12 +82,10 @@
     const user_id = $.cookie('user_id');
     let $userId = $('#userId');
     let $chkSaveId = $('#chk_save_id');
-
     if (user_id != null) {
         $userId.val(user_id);
         $chkSaveId.prop('checked', true);
     }
-
     function hasValue(value, name) {
         if (value.trim() === '') {
             alert(name + '를 입력해 주세요.')
@@ -87,10 +93,8 @@
         }
         return true;
     }
-
     $chkSaveId.click(function () {
         if ($chkSaveId.is(':checked')) {
-
             if (!hasValue($userId.val(), '아이디')) {
                 $chkSaveId.prop('checked', false);
             } else {
@@ -100,14 +104,11 @@
             $.removeCookie('user_id', {path: './'});
         }
     });
-
     $('#loginForm').submit(function (e) {
         e.preventDefault();
         const form = $(this);
         const url = form.attr('action');
-
-        if (!hasValue($userId.val(), '아이디') || !hasValue($('#password').val(), '비밀번호')
-            || !hasValue($('#userName').val(), '이름') || !hasValue($('#email').val(), '메일 주소')) {
+        if (!hasValue($userId.val(), '아이디') || !hasValue($('#password').val(), '비밀번호')) {
             return;
         }
 

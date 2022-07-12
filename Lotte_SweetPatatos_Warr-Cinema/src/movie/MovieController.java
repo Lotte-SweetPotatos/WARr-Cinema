@@ -1,11 +1,9 @@
 package movie;
 
-import java.io.IOException;
 
-import java.util.List;
-import java.util.Optional;
 import dao.MemberDao;
 import dao.MovieDao;
+import dto.MemberDto;
 import dto.MovieDto;
 
 import javax.servlet.RequestDispatcher;
@@ -18,16 +16,15 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+
 import dao.TicketDao;
-import dto.MovieDto;
 import dto.RunningDto;
-import net.sf.json.JSONObject;
-import dto.MemberDto;
+import org.json.JSONObject;
 
 @WebServlet("/movie")
 public class MovieController extends HttpServlet {
 
-	private MovieDao movieDao = MovieDao.getInstance();
+	final private MovieDao movieDao = MovieDao.getInstance();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -62,11 +59,12 @@ public class MovieController extends HttpServlet {
 	         
 	     }
 		 else if("findTimeTable".equals(param)) {
-			 System.out.println("findTimeTable");
+			 if (!loginValidation(req)) {
+					resp.sendRedirect("member/login.jsp");
+					return;
+			}
 	         int movieId=Integer.parseInt(req.getParameter("movieId"));
 	         String runningDate=req.getParameter("runningDate");
-	         
-	         System.out.println(movieId+" "+runningDate);
 	         
 	         List<RunningDto> list=dao.findByMovieIdAndRunningDate(movieId,runningDate);
 	         System.out.println(list.size());
@@ -84,9 +82,7 @@ public class MovieController extends HttpServlet {
 	         
 	         reserveTicket(memberId,runningId,movieId);
 	         
-	         // TODO: 예매 후 마이페이지 이동
-	         req.setAttribute("userId",memberId);
-	         forward("member/mypage.jsp",req,resp);
+	         resp.sendRedirect("member?param=mypage&user_id="+memberId);
 	      }
 		 else if ("detail".equals(param)) {
 			if (!loginValidation(req)) {
@@ -94,9 +90,10 @@ public class MovieController extends HttpServlet {
 				return;
 			}
 
-			final Optional<Long> movieId = Optional.ofNullable(Long.parseLong(req.getParameter("id")));
+			final Optional<Long> movieId = Optional.ofNullable(Long.parseLong(req.getParameter("movieId")));
 
 			if (movieId.isEmpty()) {
+
 				resp.sendRedirect("movie/main.jsp");
 				return;
 			}
@@ -110,7 +107,7 @@ public class MovieController extends HttpServlet {
 				System.out.println(movieDto.toString());
 			}
 			req.setAttribute("allMovieList", allMovie);
-			resp.sendRedirect("movie/main.jsp");
+			req.getRequestDispatcher("movie/main.jsp").forward(req, resp);
 			return;
 		}
 	}
