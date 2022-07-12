@@ -2,26 +2,41 @@ package dto;
 
 public class MovieDto {
 
-    private Long id;
-    private String title;
-    private String content;
-    private Double grade;
-    private String genre;
-    private String director;
-    private Integer runningTime;
-    private String openingDate;
-    private String poster;
-    private Double percent;
-    
-    public MovieDto() {}
+	private Long id;
+	private String title;
+	private String content;
+	private Double grade;
+	private String genre;
+	private String director;
+	private Integer runningTime;
+	private String openingDate;
+	private String poster;
+	private Double percent;
+
+	public MovieDto() {
+	}
 
 	public MovieDto(long id, String title) {
 		this.id = id;
 		this.title = title;
 	}
-	
+
+	public MovieDto(Long id, Integer runningTime) {
+		this.id = id;
+		this.runningTime = runningTime;
+	}
+
+	public MovieDto(Long id, String title, Integer runningTime, Double grade, String poster, String openingDate) {
+		this.id = id;
+		this.title = title;
+		this.grade = grade;
+		this.runningTime = runningTime;
+		this.openingDate = openingDate;
+		this.poster = poster;
+	}
+
 	public MovieDto(String title, String content, double grade, String genre, String director, int runningTime,
-			String openingDate, String poster, double percent) {
+					String openingDate, String poster, double percent) {
 		this.title = title;
 		this.content = content;
 		this.grade = grade;
@@ -34,7 +49,7 @@ public class MovieDto {
 	}
 
 	public MovieDto(long id, String title, String content, double grade, String genre, String director, int runningTime,
-			String openingDate, String poster, double percent) {
+					String openingDate, String poster, double percent) {
 
 		this.id = id;
 		this.title = title;
@@ -48,13 +63,13 @@ public class MovieDto {
 		this.percent = percent;
 	}
 
-	public MovieDto(Long id, String title, int runningTime, double grade, String poster, String openingDate) {
-		this.id= id;
+	public MovieDto(String title, String content, int runningTime, double grade, String poster, double percent) {
 		this.title = title;
+		this.content = content;
 		this.runningTime = runningTime;
 		this.grade = grade;
 		this.poster = poster;
-		this.openingDate = openingDate;
+		this.percent = percent;
 	}
 
 	public long getId() {
@@ -95,13 +110,5 @@ public class MovieDto {
 
 	public double getPercent() {
 		return percent;
-	}
-	
-	public void changeId(Long id) {
-		this.id=id;
-	}
-	
-	public void changeRunningTime(int runningTime) {
-		this.runningTime=runningTime;
 	}
 }

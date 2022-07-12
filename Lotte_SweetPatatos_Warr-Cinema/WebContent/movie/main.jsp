@@ -1,10 +1,14 @@
 <%@ page import="dao.MovieDao" %>
 <%@ page import="dto.MovieDto" %>
 <%@ page import="java.util.List" %>
+<%@ page import="dto.MemberDto" %>
+<%@ page import="java.util.Optional" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     MovieDao movieDao = MovieDao.getInstance();
     List<MovieDto> allMainMovies = movieDao.findAllMainMovies();
+
+    final Optional<Object> login = Optional.ofNullable(session.getAttribute("member"));
 %>
 <html>
 <head>
@@ -28,7 +32,17 @@
         <div class="overlay" data-overlay></div>
         <div style="font-weight: 700" class="h2">WARr Cinema</div>
         <div class="header-actions">
+            <%
+                if (login.isEmpty()) {
+            %>
             <button class="btn btn-primary" id="loginBtn">Log in</button>
+            <% } else {
+                MemberDto memberDto = (MemberDto) login.get();
+            %>
+            <a href=<%="/member?param=mypage&memberId=" + memberDto.getId()%>>
+                <button class="btn btn-primary">mypage</button>
+            </a>
+            <% } %>
         </div>
         <nav class="navbar" data-navbar>
             <div class="navbar-top">
@@ -41,7 +55,7 @@
                     <a href="/movie/main.jsp" class="navbar-link">Home</a>
                 </li>
                 <li>
-                    <a href="/movie?param=ticket" class="navbar-link">Reservation</a>
+                    <a onclick="reserveBtn(<%=login.map(o -> ((MemberDto) o).getId()).orElse(null)%>)" class="navbar-link">Reservation</a>
                 </li>
             </ul>
         </nav>
@@ -58,38 +72,38 @@
                         for (int i = 0; i < allMainMovies.size(); i++) {
                             MovieDto movie = allMainMovies.get(i);
                     %>
-                        <li>
-                            <div class="movie-card">
+                    <li>
+                        <div class="movie-card">
+                            <a href="<%=request.getContextPath()%>/movie?param=detail&movieId=<%=movie.getId()%>">
+                                <figure class="card-banner">
+                                    <img src="<%=movie.getPoster()%>" alt="<%=movie.getTitle()%>">
+                                </figure>
+                            </a>
+                            <div class="title-wrapper">
                                 <a href="<%=request.getContextPath()%>/movie?param=detail&movieId=<%=movie.getId()%>">
-                                    <figure class="card-banner">
-                                        <img src="<%=movie.getPoster()%>" alt="<%=movie.getTitle()%>">
-                                    </figure>
+                                    <h2 class="h2 card-title"><%=movie.getTitle()%>
+                                    </h2>
                                 </a>
-                                <div class="title-wrapper">
-                                    <a href="<%=request.getContextPath()%>/movie?param=detail&movieId=<%=movie.getId()%>">
-                                        <h2 class="h2 card-title"><%=movie.getTitle()%>
-                                        </h2>
-                                    </a>
+                            </div>
+                            <div class="date-time">
+                                <div>
+                                    <ion-icon name="calendar-outline"></ion-icon>
+                                    <time><%=movie.getOpeningDate()%>
+                                    </time>
                                 </div>
-                                <div class="date-time">
-                                    <div>
-                                        <ion-icon name="calendar-outline"></ion-icon>
-                                        <time><%=movie.getOpeningDate()%>
-                                        </time>
-                                    </div>
-                                    <div>
-                                        <ion-icon name="time-outline"></ion-icon>
-                                        <time><%=movie.getRunningTime()%> min
-                                        </time>
-                                    </div>
-                                    <div>
-                                        <ion-icon name="star"></ion-icon>
-                                        <data><%=movie.getGrade()%>
-                                        </data>
-                                    </div>
+                                <div>
+                                    <ion-icon name="time-outline"></ion-icon>
+                                    <time><%=movie.getRunningTime()%> min
+                                    </time>
+                                </div>
+                                <div>
+                                    <ion-icon name="star"></ion-icon>
+                                    <data><%=movie.getGrade()%>
+                                    </data>
                                 </div>
                             </div>
-                        </li>
+                        </div>
+                    </li>
                     <%
                         }
                     %>

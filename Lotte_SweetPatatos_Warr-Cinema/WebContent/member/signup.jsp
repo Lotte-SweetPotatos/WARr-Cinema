@@ -30,7 +30,7 @@
             </div>
             <ul class="navbar-list">
                 <li>
-                    <a href="./index.html" class="navbar-link">Home</a>
+                    <a href="/movie/main.jsp" class="navbar-link">Home</a>
                 </li>
                 <li>
                     <a href="#" class="navbar-link">Reservation</a>

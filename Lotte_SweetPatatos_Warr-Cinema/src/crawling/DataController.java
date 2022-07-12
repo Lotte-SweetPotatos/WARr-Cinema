@@ -1,20 +1,19 @@
 package crawling;
 
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import dao.MovieDao;
+import dao.RunningDao;
+import dto.MovieDto;
+import dto.RunningDto;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import dao.MovieDao;
-import dao.RunningDao;
-import dto.MovieDto;
-import dto.RunningDto;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 @WebServlet("")
 public class DataController extends HttpServlet {
@@ -36,11 +35,14 @@ public class DataController extends HttpServlet {
 			// data insert
 			List<MovieDto> movieIds = dao.findIdAndRunningTime();
 			String[][] startTime = {
-					{"10:10","12:40","15:10","17:40","20:10"},
-					{"10:20","13:00","15:40","18:20","21:00"},
-					{ "9:40", "11:20", "15:25", "18:20", "21:00" },
-					{"9:00","11:50","14:40","17:30","20:20"},
-			        {"10:00","12:45","15:00","18:20","20:00"}
+					{"10:10", "12:40", "15:10", "17:40", "20:10"},
+					{"10:20", "13:00", "15:40", "18:20", "21:00"},
+					{"9:40", "11:20", "15:25", "18:20", "21:00"},
+					{"9:00", "11:50", "14:40", "17:30", "20:20"},
+					{"10:00", "12:45", "15:00", "18:20", "20:00"},
+					{"9:40", "11:20", "15:25", "18:20", "21:00"},
+					{"10:10", "12:40", "15:10", "17:40", "20:10"},
+					{"9:40", "11:20", "15:25", "18:20", "21:00"}
 			};
 			
 			String[] runningDate =new String[7];
@@ -62,11 +64,11 @@ public class DataController extends HttpServlet {
 				String date=year+"."+String.format("%02d", month)+"."+d;
 				runningDate[i]=date;
 			}
-			
+
 
 			for (int i = 0; i < movieIds.size(); ++i) { // movie
 				for (int j = 0; j < runningDate.length; ++j) { // runningDate
-					for (int z = 0; z < startTime.length; ++z) { //startTime
+					for (int z = 0; z < startTime[i].length; ++z) { //startTime
 						MovieDto dto = movieIds.get(i);
 						RunningDto rDto = new RunningDto(dto.getId(), startTime[i][z],
 								getEndTime(startTime[i][z], dto.getRunningTime()), dto.getRunningTime(), runningDate[j],

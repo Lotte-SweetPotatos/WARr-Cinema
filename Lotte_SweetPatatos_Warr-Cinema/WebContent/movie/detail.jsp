@@ -1,36 +1,11 @@
 <%@page import="java.util.Optional" %>
-<%@page import="dao.MovieDao" %>
 <%@page import="dto.MovieDto" %>
+<%@ page import="dto.MemberDto" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-         
-<%--<%
-Optional<Long> movieId = Optional.ofNullable(Long.parseLong(request.getParameter("id"))); // movie id 가져옴
-    if (movieId.isEmpty()) {
-%>
-    <script type="text/javascript">
-    location.href = "movie/main.jsp";
-    </script>
 <%
-    }
-    
-    MovieDao movieDao = MovieDao.getInstance();
-    Optional<MovieDto> movieDto = Optional.ofNullable(movieDao.find(Long.parseLong(movieId.get())));
-
-    if (movieDto.isEmpty()) {
-%>
-    <script type="text/javascript">
-    location.href = "movie/main.jsp";
-    </script>
-<%
-}
---%>
-<%
-	Optional<Long> movieId = Optional.ofNullable(Long.parseLong(request.getParameter("id")));
-    MovieDao movieDao = MovieDao.getInstance();
-
-    Optional<MovieDto> movieDto = Optional.ofNullable(movieDao.find(movieId.get()));
-    MovieDto movie = movieDto.get();
+    final Optional<Object> login = Optional.ofNullable(session.getAttribute("member"));
+    MovieDto movie = (MovieDto) request.getAttribute("movie");
 %>
 <!DOCTYPE html>
 <html>
@@ -55,7 +30,17 @@ Optional<Long> movieId = Optional.ofNullable(Long.parseLong(request.getParameter
         <div class="overlay" data-overlay></div>
         <div style="font-weight: 700" class="h2">WARr Cinema</div>
         <div class="header-actions">
+            <%
+                if (login.isEmpty()) {
+            %>
             <button class="btn btn-primary" id="loginBtn">Log in</button>
+            <% } else {
+                MemberDto memberDto = (MemberDto) login.get();
+            %>
+            <a href=<%="/member?param=mypage&memberId=" + memberDto.getId()%>>
+                <button class="btn btn-primary">mypage</button>
+            </a>
+            <% } %>
         </div>
         <nav class="navbar" data-navbar>
             <div class="navbar-top">
@@ -68,7 +53,8 @@ Optional<Long> movieId = Optional.ofNullable(Long.parseLong(request.getParameter
                     <a href="/movie/main.jsp" class="navbar-link">Home</a>
                 </li>
                 <li>
-                    <a href="/movie/ticket.jsp" class="navbar-link">Reservation</a>
+                    <a onclick="reserveBtn(<%=login.map(o -> ((MemberDto) o).getId()).orElse(null)%>)"
+                       class="navbar-link">Reservation</a>
                 </li>
             </ul>
         </nav>
@@ -135,6 +121,7 @@ Optional<Long> movieId = Optional.ofNullable(Long.parseLong(request.getParameter
                     </div>
                     <p class="storyline"><%=movie.getContent()%>
                     </p>
+                    <% if (login.isPresent()) {%>
                     <form action="<%=request.getContextPath()%>/movie">
                         <input type="hidden" value="ticket" name="param">
                         <input type="hidden" value="<%=movie.getId()%>" name="movieId">
@@ -143,6 +130,7 @@ Optional<Long> movieId = Optional.ofNullable(Long.parseLong(request.getParameter
                             <ion-icon name="arrow-forward-outline"></ion-icon>
                         </button>
                     </form>
+                    <% }%>
                 </div>
             </div>
         </section>
