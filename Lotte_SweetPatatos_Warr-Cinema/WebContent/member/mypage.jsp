@@ -209,7 +209,7 @@
                 console.log('error')
             },
         });
-        location.href = '/member?param=mypage&userId=' + '<%=member.getId()%>'
+        location.href = '/member?param=mypage&memberId=' + '<%=member.getId()%>'
     }
 </script>
 <script src="../assets/js/script.js"></script>
