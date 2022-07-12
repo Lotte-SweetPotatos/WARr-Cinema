@@ -1,7 +1,7 @@
 package movie;
 
-import dao.MemberDao;
 import dao.MovieDao;
+import dto.MemberDto;
 import dto.MovieDto;
 
 import javax.servlet.ServletException;
@@ -13,13 +13,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import dao.MovieDao;
-import dto.MemberDto;
-
 @WebServlet("/movie")
 public class MovieController extends HttpServlet {
 
-	private MovieDao movieDao = MovieDao.getInstance();
+	final private MovieDao movieDao = MovieDao.getInstance();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,9 +34,10 @@ public class MovieController extends HttpServlet {
 				return;
 			}
 
-			final Optional<Long> movieId = Optional.ofNullable(Long.parseLong(req.getParameter("id")));
+			final Optional<Long> movieId = Optional.ofNullable(Long.parseLong(req.getParameter("movieId")));
 
 			if (movieId.isEmpty()) {
+
 				resp.sendRedirect("movie/main.jsp");
 				return;
 			}
@@ -54,7 +52,7 @@ public class MovieController extends HttpServlet {
 				System.out.println(movieDto.toString());
 			}
 			req.setAttribute("allMovieList", allMovie);
-			resp.sendRedirect("movie/main.jsp");
+			req.getRequestDispatcher("movie/main.jsp").forward(req, resp);
 			return;
 		}
 		if ("ticket".equals(param)) {
