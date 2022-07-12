@@ -41,13 +41,13 @@ public class MovieDto {
 		this.percent = percent;
 	}
 
-	public MovieDto(String title, String content, int runningTime, double grade, String poster, double percent) {
+	public MovieDto(Long id, String title, int runningTime, double grade, String poster, String openingDate) {
+		this.id= id;
 		this.title = title;
-		this.content = content;
 		this.runningTime = runningTime;
 		this.grade = grade;
 		this.poster = poster;
-		this.percent = percent;
+		this.openingDate = openingDate;
 	}
 
 	public long getId() {
@@ -88,5 +88,21 @@ public class MovieDto {
 
 	public double getPercent() {
 		return percent;
+	}
+
+	@Override
+	public String toString() {
+		return "MovieDto{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", content='" + content + '\'' +
+				", grade=" + grade +
+				", genre='" + genre + '\'' +
+				", director='" + director + '\'' +
+				", runningTime=" + runningTime +
+				", openingDate='" + openingDate + '\'' +
+				", poster='" + poster + '\'' +
+				", percent=" + percent +
+				'}';
 	}
 }

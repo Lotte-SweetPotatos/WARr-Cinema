@@ -2,9 +2,8 @@ package member;
 
 import dao.MemberDao;
 import dto.MemberDto;
-import org.json.JSONObject;
+import net.sf.json.JSONObject;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
