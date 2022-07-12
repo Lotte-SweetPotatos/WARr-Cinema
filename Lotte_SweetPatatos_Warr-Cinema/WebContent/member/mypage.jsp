@@ -44,7 +44,7 @@
                 MemberDto memberDto = (MemberDto) login.get();
                 session.setAttribute("member", memberDto);
             %>
-            <a href=<%="/member?param=mypage&userId=" + memberDto.getId()%>>
+            <a href=<%="/member?param=mypage&memberId=" + memberDto.getId()%>>
                 <button class="btn btn-primary">mypage</button>
             </a>
             <% %>
