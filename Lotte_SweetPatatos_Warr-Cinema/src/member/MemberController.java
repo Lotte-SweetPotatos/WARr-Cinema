@@ -46,6 +46,13 @@ public class MemberController extends HttpServlet {
         if ("signup".equals(param)) {
             resp.sendRedirect("member/signup.jsp");
         }
+	
+	if ("mypage".equals(param)) {
+            int user_id = Integer.parseInt(req.getParameter("user_id"));
+            JSONObject jsonob = memberDao.findByReserve(user_id);
+            req.getSession().setAttribute("reserve", jsonob);
+            resp.sendRedirect("member/mypage.jsp");
+	}
     }
 
     private boolean isPresentParameter(Optional<String> queryParam) {
@@ -75,13 +82,6 @@ public class MemberController extends HttpServlet {
             resp.getWriter().println(jsonObject);
         }
         
-        if ("mypage".equals(param)) {
-            int user_id = Integer.parseInt(req.getParameter("user_id"));
-            JSONObject jsonob = memberDao.findByReserve(user_id);
-            req.getSession().setAttribute("reserve", jsonob);
-            resp.sendRedirect("member/mypage.jsp");
-		}
-
         if ("cancel".equals(param)) {
             int user_id = Integer.parseInt(req.getParameter("user_id"));
             int movie_id = Integer.parseInt(req.getParameter("movie_id"));
