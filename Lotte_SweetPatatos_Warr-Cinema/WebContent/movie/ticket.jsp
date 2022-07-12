@@ -168,6 +168,19 @@
 <script type="text/javascript">
     let selectedMovie = null;
     let selectedDay = null;
+    let selectedTime = null;
+
+    function changeTimeColor(newSelected) {
+        if (selectedTime !== null) {
+            selectedTime.css('background-color', 'var(--eerie-black)');
+            selectedTime.find('*').css('color', 'var(--white');
+        }
+
+        selectedTime = newSelected;
+        selectedTime.css('background-color', 'var(--citrine)');
+        selectedTime.find('*').css('color', 'var(--eerie-black');
+
+    }
 
     function changeMovieColor(newSelected) {
         if (selectedMovie !== null) {
@@ -261,6 +274,7 @@
             },
             complete: function () {
                 $(".runningB").click(function () {
+                    changeTimeColor($(this));
                     $('#selTime').val($(this).children('h3.reserveStart').text());
                     $('#selRunningId').val($(this).children('div.runningId').text());
                     $('#memberId').val(<%=member.getId()%>);
