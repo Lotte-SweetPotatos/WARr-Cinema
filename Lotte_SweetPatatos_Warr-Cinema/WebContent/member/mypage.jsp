@@ -121,17 +121,20 @@
                                         String poster = (String) obj.get("poster");
                                         String cineName = (String) obj.get("cineName");
                                         String runningDate = (String) obj.get("runningDate");
+                                        runningDate = runningDate.replaceAll("\\.", "");
                                         String runningDateFormat =
                                                 runningDate.substring(0, 4) + ". "
                                                         + runningDate.substring(4, 6) + ". "
                                                         + runningDate.substring(6, 8);
 
                                         String reserveStartTime = (String) obj.get("reserveStartTime");
+                                        reserveStartTime = reserveStartTime.replaceAll(":", "");
                                         String reserveStartTimeFormat = reserveStartTime.length() < 4
                                                 ? reserveStartTime.substring(0, 1) + " : " + reserveStartTime.substring(1, 3)
                                                 : reserveStartTime.substring(0, 2) + " : " + reserveStartTime.substring(2, 4);
 
                                         String reserveEndTime = (String) obj.get("reserveEndTime");
+                                        reserveEndTime = reserveEndTime.replaceAll(":", "");
                                         String reserveEndTimeFormat = reserveEndTime.length() < 4
                                                 ? reserveEndTime.substring(0, 1) + " : " + reserveEndTime.substring(1, 3)
                                                 : reserveEndTime.substring(0, 2) + " : " + reserveEndTime.substring(2, 4);
