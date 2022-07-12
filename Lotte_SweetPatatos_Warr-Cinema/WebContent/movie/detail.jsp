@@ -3,8 +3,9 @@
 <%@page import="dto.MovieDto" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%
-    Optional<String> movieId = Optional.ofNullable((request.getParameter("id"))); // movie id 가져옴
+         
+<%--<%
+Optional<Long> movieId = Optional.ofNullable(Long.parseLong(request.getParameter("id"))); // movie id 가져옴
     if (movieId.isEmpty()) {
 %>
     <script type="text/javascript">
@@ -22,7 +23,13 @@
     location.href = "movie/main.jsp";
     </script>
 <%
-    }
+}
+--%>
+<%
+	Optional<Long> movieId = Optional.ofNullable(Long.parseLong(request.getParameter("id")));
+    MovieDao movieDao = MovieDao.getInstance();
+
+    Optional<MovieDto> movieDto = Optional.ofNullable(movieDao.find(movieId.get()));
     MovieDto movie = movieDto.get();
 %>
 <!DOCTYPE html>
