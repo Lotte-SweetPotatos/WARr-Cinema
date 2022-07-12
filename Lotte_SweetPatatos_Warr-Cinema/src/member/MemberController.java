@@ -18,7 +18,7 @@ public class MemberController extends HttpServlet {
     private final MemberDao memberDao = MemberDao.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         final Optional<String> queryParam = Optional.ofNullable(req.getParameter("param"));
         if (isPresentParameter(queryParam)) {
             resp.sendRedirect("movie/main.jsp");
@@ -46,6 +46,13 @@ public class MemberController extends HttpServlet {
         if ("signup".equals(param)) {
             resp.sendRedirect("member/signup.jsp");
         }
+
+        if ("mypage".equals(param)) {
+            int userId = Integer.parseInt(req.getParameter("userId"));
+            JSONObject jsonob = memberDao.findByReserve(userId);
+            req.setAttribute("reserve", jsonob);
+            req.getRequestDispatcher("member/mypage.jsp").forward(req, resp);
+        }
     }
 
     private boolean isPresentParameter(Optional<String> queryParam) {
@@ -68,33 +75,23 @@ public class MemberController extends HttpServlet {
         if ("login".equals(param)) {
             jsonObject.put("loginSuccess", login(req));
             resp.getWriter().println(jsonObject);
+            return;
         }
 
         if ("signup".equals(param)) {
             jsonObject.put("signupSuccess", signup(req));
             resp.getWriter().println(jsonObject);
+            return;
         }
-        
-        if ("mypage".equals(param)) {
-            int user_id = Integer.parseInt(req.getParameter("user_id"));
-            JSONObject jsonob = memberDao.findByReserve(user_id);
-            req.getSession().setAttribute("reserve", jsonob);
-            resp.sendRedirect("member/mypage.jsp");
-		}
 
         if ("cancel".equals(param)) {
-            int user_id = Integer.parseInt(req.getParameter("user_id"));
-            int movie_id = Integer.parseInt(req.getParameter("movie_id"));
-            int running_id = Integer.parseInt(req.getParameter("running_id"));
-            boolean isSuccess = memberDao.cancelReserve(user_id, movie_id, running_id);
-            String msg = "NO";
-            req.getSession().setAttribute("cancle", msg);
-            if (isSuccess) {
-              msg = "Success";
-              JSONObject jsonob = memberDao.findByReserve(user_id);
-              req.getSession().setAttribute("reserve", jsonob);
-            }
-            resp.sendRedirect("member/mypage.jsp");
+            int userId = Integer.parseInt(req.getParameter("memberId"));
+            int movieId = Integer.parseInt(req.getParameter("movieId"));
+            int runningId = Integer.parseInt(req.getParameter("runningId"));
+            boolean cancelSuccess = memberDao.cancelReserve(userId, movieId, runningId);
+
+            jsonObject.put("cancelSuccess", cancelSuccess);
+            resp.getWriter().println(jsonObject);
          }
     }
 
