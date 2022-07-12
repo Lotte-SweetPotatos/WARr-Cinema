@@ -4,33 +4,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
          
-<%--<%
-Optional<Long> movieId = Optional.ofNullable(Long.parseLong(request.getParameter("id"))); // movie id 가져옴
-    if (movieId.isEmpty()) {
-%>
-    <script type="text/javascript">
-    location.href = "movie/main.jsp";
-    </script>
 <%
-    }
-    
-    MovieDao movieDao = MovieDao.getInstance();
-    Optional<MovieDto> movieDto = Optional.ofNullable(movieDao.find(Long.parseLong(movieId.get())));
-
-    if (movieDto.isEmpty()) {
-%>
-    <script type="text/javascript">
-    location.href = "movie/main.jsp";
-    </script>
-<%
-}
---%>
-<%
-	Optional<Long> movieId = Optional.ofNullable(Long.parseLong(request.getParameter("id")));
-    MovieDao movieDao = MovieDao.getInstance();
-
-    Optional<MovieDto> movieDto = Optional.ofNullable(movieDao.find(movieId.get()));
-    MovieDto movie = movieDto.get();
+MovieDto movie = (MovieDto)request.getAttribute("movie");
 %>
 <!DOCTYPE html>
 <html>

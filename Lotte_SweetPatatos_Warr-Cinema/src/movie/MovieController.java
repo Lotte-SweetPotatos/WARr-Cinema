@@ -42,7 +42,12 @@ public class MovieController extends HttpServlet {
 				return;
 			}
 
-			resp.sendRedirect(req.getContextPath() + "/movie/detail.jsp?id=" + movieId.get().longValue());
+			MovieDto movieDto = movieDao.find(movieId.get());
+
+			resp.setContentType("application/x-json; charset=utf-8");
+			req.setAttribute("movie", movieDto);
+			req.getRequestDispatcher("movie/detail.jsp").forward(req, resp);
+			
 			return;
 		}
 
