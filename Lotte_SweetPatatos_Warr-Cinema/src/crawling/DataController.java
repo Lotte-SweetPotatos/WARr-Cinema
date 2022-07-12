@@ -78,8 +78,7 @@ public class DataController extends HttpServlet {
 
 			}
 		}
-
-		resp.sendRedirect(req.getContextPath()+"/movie/main.jsp");
+		resp.sendRedirect("movie/main.jsp");
 	}
 
 	public String getEndTime(String startTime, int runningTime) {
