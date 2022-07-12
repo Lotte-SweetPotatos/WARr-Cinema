@@ -19,7 +19,9 @@ import java.util.Optional;
 
 import dao.TicketDao;
 import dto.RunningDto;
-import net.sf.json.JSONObject;
+import org.json.JSONObject;
+import dao.TicketDao;
+import dto.RunningDto;
 
 @WebServlet("/movie")
 public class MovieController extends HttpServlet {
@@ -59,11 +61,12 @@ public class MovieController extends HttpServlet {
 	         
 	     }
 		 else if("findTimeTable".equals(param)) {
-			 System.out.println("findTimeTable");
+			 if (!loginValidation(req)) {
+					resp.sendRedirect("member/login.jsp");
+					return;
+			}
 	         int movieId=Integer.parseInt(req.getParameter("movieId"));
 	         String runningDate=req.getParameter("runningDate");
-	         
-	         System.out.println(movieId+" "+runningDate);
 	         
 	         List<RunningDto> list=dao.findByMovieIdAndRunningDate(movieId,runningDate);
 	         System.out.println(list.size());
@@ -81,9 +84,7 @@ public class MovieController extends HttpServlet {
 	         
 	         reserveTicket(memberId,runningId,movieId);
 	         
-	         // TODO: 예매 후 마이페이지 이동
-	         req.setAttribute("userId",memberId);
-	         forward("member/mypage.jsp",req,resp);
+	         resp.sendRedirect("member?param=mypage&user_id="+memberId);
 	      }
 		 else if ("detail".equals(param)) {
 			if (!loginValidation(req)) {

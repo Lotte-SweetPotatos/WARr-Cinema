@@ -1,6 +1,5 @@
 <%@page import="dto.MemberDto"%>
 <%@page import="java.net.URLEncoder"%>
-<%@page import="com.mysql.cj.xdevapi.JsonArray"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.util.List"%>

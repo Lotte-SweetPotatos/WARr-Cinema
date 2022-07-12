@@ -4,7 +4,7 @@ import dao.MemberDao;
 
 
 import dto.MemberDto;
-import net.sf.json.JSONObject;
+import org.json.JSONObject;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -87,6 +87,7 @@ public class MemberController extends HttpServlet {
             int user_id = Integer.parseInt(req.getParameter("user_id"));
             int movie_id = Integer.parseInt(req.getParameter("movie_id"));
             int running_id = Integer.parseInt(req.getParameter("running_id"));
+            
             boolean isSuccess = memberDao.cancelReserve(user_id, movie_id, running_id);
             String msg = "NO";
             req.getSession().setAttribute("cancle", msg);

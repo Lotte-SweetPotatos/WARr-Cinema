@@ -274,7 +274,7 @@ tr:hover {background-color: coral;}
 							$(".runningB").click(function() {
 								$('#selTime').val($(this).children('strong').text());
 								$('#selRunningId').val($(this).children('span.runningId').text());
-								$('#memberId').val(1);
+								/* $('#memberId').val(1); */
 							});
 						}
 						});
