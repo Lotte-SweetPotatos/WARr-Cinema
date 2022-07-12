@@ -53,7 +53,8 @@
                     <a href="/movie/main.jsp" class="navbar-link">Home</a>
                 </li>
                 <li>
-                    <a onclick="reserveBtn(<%=login.map(o -> ((MemberDto) o).getId()).orElse(null)%>)" class="navbar-link">Reservation</a>
+                    <a onclick="reserveBtn(<%=login.map(o -> ((MemberDto) o).getId()).orElse(null)%>)"
+                       class="navbar-link">Reservation</a>
                 </li>
             </ul>
         </nav>
@@ -120,6 +121,7 @@
                     </div>
                     <p class="storyline"><%=movie.getContent()%>
                     </p>
+                    <% if (login.isPresent()) {%>
                     <form action="<%=request.getContextPath()%>/movie">
                         <input type="hidden" value="ticket" name="param">
                         <input type="hidden" value="<%=movie.getId()%>" name="movieId">
@@ -128,6 +130,7 @@
                             <ion-icon name="arrow-forward-outline"></ion-icon>
                         </button>
                     </form>
+                    <% }%>
                 </div>
             </div>
         </section>
