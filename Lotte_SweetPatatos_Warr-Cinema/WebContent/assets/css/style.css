@@ -147,6 +147,15 @@ body.active {
     align-content: center;
 }
 
+.flex-div {
+    display: flex;
+}
+
+.flex-div-col {
+    display: flex;
+    flex-direction: column;
+}
+
 .control {
     margin-top: 2rem;
 }
@@ -210,6 +219,19 @@ figure img {
     text-align: center;
 }
 
+.info {
+    padding-bottom: 5rem;
+    border-bottom: 1px dashed hsla(0, 0%, 100%, 0.1);
+    margin-bottom: 5rem;
+}
+
+.card-reserve {
+    width: 100%;
+    padding-bottom: 3rem;
+    border-bottom: 1px dashed hsla(0, 0%, 100%, 0.1);
+    margin: 1rem;
+}
+
 /**
  * BADGE
  */
@@ -246,7 +268,8 @@ figure img {
 
 .badge-wrapper,
 .ganre-wrapper,
-.date-time {
+.date-time,
+.member-info {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -278,6 +301,20 @@ figure img {
 }
 
 .date-time ion-icon {
+    --ionicon-stroke-width: 50px;
+    color: var(--citrine);
+}
+
+.member-info > div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--gainsboro);
+    font-size: var(--fs-5);
+    font-weight: var(--fw-500);
+}
+
+.member-info ion-icon {
     --ionicon-stroke-width: 50px;
     color: var(--citrine);
 }

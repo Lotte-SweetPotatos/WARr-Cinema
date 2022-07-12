@@ -16,7 +16,7 @@ import java.util.Optional;
 @WebServlet("/movie")
 public class MovieController extends HttpServlet {
 
-	private MovieDao movieDao = MovieDao.getInstance();
+	private final MovieDao movieDao = MovieDao.getInstance();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,19 +29,15 @@ public class MovieController extends HttpServlet {
 		final String param = queryParam.get();
 
 		if ("detail".equals(param)) {
-			if (!loginValidation(req)) {
-				resp.sendRedirect("member/login.jsp");
-				return;
-			}
-
-			final Optional<Long> movieId = Optional.ofNullable(Long.parseLong(req.getParameter("movieId")));
-
+			Optional<String> movieId = Optional.ofNullable(req.getParameter("movieId"));
 			if (movieId.isEmpty()) {
 				resp.sendRedirect("movie/main.jsp");
 				return;
 			}
 
-			resp.sendRedirect(req.getContextPath() + "/movie/detail.jsp?id=" + movieId.get().longValue());
+			MovieDto movieDto = movieDao.find(Long.parseLong(movieId.get()));
+			req.setAttribute("movie", movieDto);
+			req.getRequestDispatcher("movie/detail.jsp").forward(req, resp);
 			return;
 		}
 
@@ -61,16 +57,6 @@ public class MovieController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	}
-
-	private boolean loginValidation(HttpServletRequest req) {
-		final Optional<MemberDto> member = Optional.ofNullable((MemberDto) (req.getSession().getAttribute("member")));
-
-		if (member.isEmpty()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private boolean isPresentParameter(Optional<String> queryParam) {

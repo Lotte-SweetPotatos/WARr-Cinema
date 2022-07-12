@@ -1,29 +1,11 @@
 <%@page import="java.util.Optional" %>
-<%@page import="dao.MovieDao" %>
 <%@page import="dto.MovieDto" %>
+<%@ page import="dto.MemberDto" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%
-    Optional<Long> movieId = Optional.ofNullable(Long.parseLong(request.getParameter("id"))); // movie id 가져옴
-
-    if (movieId.isEmpty()) {
-%>
-<script type="text/javascript">
-    location.href = "movie/main.jsp";
-</script>
-<%
-    }
-    MovieDao movieDao = MovieDao.getInstance();
-    Optional<MovieDto> movieDto = Optional.ofNullable(movieDao.find(movieId.get()));
-
-    if (movieDto.isEmpty()) {
-%>
-<script type="text/javascript">
-    location.href = "movie/main.jsp";
-</script>
-<%
-    }
-    MovieDto movie = movieDto.get();
+    final Optional<MemberDto> login = Optional.ofNullable((MemberDto) session.getAttribute("member"));
+    MovieDto movie = (MovieDto) request.getAttribute("movie");
 %>
 <!DOCTYPE html>
 <html>
@@ -48,7 +30,15 @@
         <div class="overlay" data-overlay></div>
         <div style="font-weight: 700" class="h2">WARr Cinema</div>
         <div class="header-actions">
-            <button class="btn btn-primary" id="loginBtn">Log in</button>
+            <button style="visibility: <%= login.isEmpty() ? "visible" : "hidden"%>" class="btn btn-primary"
+                    id="loginBtn">Log in
+            </button>
+            <a style="visibility: <%= login.isPresent() ? "visible" : "hidden"%>"
+               href=<%= login.map(memberDto -> "/member?param=mypage&userID=" + memberDto.getId()).orElse("#") %>>
+                <button class="btn btn-primary">
+                    mypage
+                </button>
+            </a>
         </div>
         <nav class="navbar" data-navbar>
             <div class="navbar-top">
@@ -104,7 +94,7 @@
                                 <time><%=movie.getDirector()%>
                                 </time>
                             </div>
-                            <div class="rating">
+                            <div>
                                 <ion-icon name="ticket-outline"></ion-icon>
                                 <data><%=movie.getPercent()%>%</data>
                             </div>

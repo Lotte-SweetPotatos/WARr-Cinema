@@ -23,6 +23,5 @@ window.addEventListener("scroll", function () {
  */
 const loginBtn = document.querySelector("#loginBtn");
 loginBtn.addEventListener("click", function () {
-    console.log('login')
     location.href = '/member/login.jsp';
 });
