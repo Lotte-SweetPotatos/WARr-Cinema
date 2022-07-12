@@ -78,7 +78,6 @@ public class DataController extends HttpServlet {
 
 			}
 		}
-		
 		resp.sendRedirect("movie/main.jsp");
 	}
 
