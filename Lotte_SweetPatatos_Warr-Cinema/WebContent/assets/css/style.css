@@ -125,6 +125,9 @@ body.active {
     overflow: hidden;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
 
 /*-----------------------------------*\
  * #REUSED STYLE
@@ -145,6 +148,15 @@ body.active {
     flex-direction: column;
     justify-content: center;
     align-content: center;
+}
+
+.flex-div {
+    display: flex;
+}
+
+.flex-div-col {
+    display: flex;
+    flex-direction: column;
 }
 
 .control {
@@ -210,6 +222,19 @@ figure img {
     text-align: center;
 }
 
+.info {
+    padding-bottom: 5rem;
+    border-bottom: 1px dashed hsla(0, 0%, 100%, 0.1);
+    margin-bottom: 5rem;
+}
+
+.card-reserve {
+    width: 100%;
+    padding-bottom: 3rem;
+    border-bottom: 1px dashed hsla(0, 0%, 100%, 0.1);
+    margin: 1rem;
+}
+
 /**
  * BADGE
  */
@@ -246,7 +271,8 @@ figure img {
 
 .badge-wrapper,
 .ganre-wrapper,
-.date-time {
+.date-time,
+.member-info {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -282,6 +308,20 @@ figure img {
     color: var(--citrine);
 }
 
+.member-info > div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--gainsboro);
+    font-size: var(--fs-5);
+    font-weight: var(--fw-500);
+}
+
+.member-info ion-icon {
+    --ionicon-stroke-width: 50px;
+    color: var(--citrine);
+}
+
 /**
  * BUTTONS
  */
@@ -312,6 +352,76 @@ figure img {
 .btn-primary:is(:hover, :focus) {
     background: var(--citrine);
     color: var(--xiketic);
+}
+
+.sel-day {
+    max-width: 4rem;
+
+    padding: 0.5rem;
+    border: 1px dashed hsla(0, 0%, 100%, 0.1);
+    margin-bottom: 1rem;
+}
+
+.sel-day:last-child {
+    border-right: none;
+}
+
+.sel-day:first-child {
+    border-left: none;
+}
+
+.sel-day > div {
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.reserve-movie > a {
+    padding: 1rem;
+    border-top: 1px dashed hsla(0, 0%, 100%, 0.1);
+}
+
+.reserve-movie:last-child {
+    border-bottom: 1px dashed hsla(0, 0%, 100%, 0.1);
+}
+
+.select-box {
+    width: 100%;
+    margin-top: -3rem;
+    max-height: 180px;
+    background-color: var(--citrine);
+}
+
+.sel {
+    font-size: var(--fs-3);
+    margin: auto;
+    color: var(--eerie-black);
+}
+
+.sel-btn {
+    margin: auto;
+    background: var(--eerie-black);
+    color: var(--white);
+
+    padding: 1rem;
+    width: 10rem;
+
+    border-radius: 20px;
+}
+
+.sel > input {
+    width: 100%;
+    font-size: var(--fs-6);
+    font-weight: 700;
+    color: var(--eerie-black);
+
+    background: none;
+}
+
+.sel > input:active, .sel > input:focus {
+    outline: none;
 }
 
 /**
@@ -736,7 +846,6 @@ figure img {
 \*-----------------------------------*/
 
 .top-rated {
-    background: url("../images/top-rated-bg.jpg") no-repeat;
     background-size: cover;
     background-position: center;
     padding-block: var(--section-padding);
