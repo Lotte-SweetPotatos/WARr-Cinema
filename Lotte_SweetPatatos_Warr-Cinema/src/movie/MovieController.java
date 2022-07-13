@@ -78,7 +78,6 @@ public class MovieController extends HttpServlet {
 				resp.sendRedirect("movie/main.jsp");
 				return;
 			}
-
 			MovieDto movieDto = movieDao.find(Long.parseLong(movieId.get()));
 			req.setAttribute("movie", movieDto);
 			req.getRequestDispatcher("movie/detail.jsp").forward(req, resp);
